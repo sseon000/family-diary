@@ -11,9 +11,9 @@
 - 프로젝트 관리
 
 ### 📖 기술
-- ![](https://img.shields.io/badge/LANGUAGE-%23121011?style=for-the-badge) ![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white)![](https://img.shields.io/badge/17-515151?style=for-the-badge) ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
-- ![](https://img.shields.io/badge/FRAMEWORK-%23121011?style=for-the-badge) ![SpringBoot](https://img.shields.io/badge/springboot-%236DB33F?style=for-the-badge&logo=springboot&logoColor=white)![](https://img.shields.io/badge/3.x-515151?style=for-the-badge)
-- ![](https://img.shields.io/badge/TEMPLATE-%23121011?style=for-the-badge) ![thymeleaf](https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white)
+- ![](https://img.shields.io/badge/LANGUAGE-%23121011?style=for-the-badge) ![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white)![](https://img.shields.io/badge/11-515151?style=for-the-badge) ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
+- ![](https://img.shields.io/badge/FRAMEWORK-%23121011?style=for-the-badge) ![Spring](https://img.shields.io/badge/spring-%236DB33F?style=for-the-badge&logo=spring&logoColor=white)![](https://img.shields.io/badge/5.0.7-515151?style=for-the-badge)
+- ![](https://img.shields.io/badge/CSS-%23121011?style=for-the-badge) ![jstl](https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 - ![](https://img.shields.io/badge/BUILD-%23121011?style=for-the-badge) ![apachemaven](https://img.shields.io/badge/apachemaven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 
 ### 👩‍💻 참여자
@@ -37,7 +37,7 @@
 ### 🔑 프로젝트 실행 안될 때 체크사항
 1. java version check -> 11
 2. maven update
-3. tomcat versio check -> 9.0
+3. tomcat version check -> 9.0
 4. build path > projectfacets > java 11 & Dynamic Web Module 4.0 
 5. database setting
 

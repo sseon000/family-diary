@@ -14,9 +14,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public MemberDto selectOne(String memberId) throws Exception {
-		System.out.println("repoimple : " + memberId);
 		MemberDto memberDto = session.selectOne(namespace+"select", memberId); 
-		System.out.println("repsoimpe.memberDto : " + memberDto);
 		return memberDto;
 	}
 

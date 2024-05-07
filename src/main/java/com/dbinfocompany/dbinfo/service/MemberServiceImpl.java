@@ -13,9 +13,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto getMember(String memberId) throws Exception {
-		System.out.println("serveimpl : " + memberId);
 		MemberDto memberDto = memberRepository.selectOne(memberId);
-		System.out.println("serveimpl.memberDto : " + memberDto);
 		return memberDto;
 	}
 
