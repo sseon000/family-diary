@@ -23,7 +23,7 @@ public class MemberController {
 		logger.info("member call");
 		
 		try {
-			MemberDto memberDto = memberService.getMember("ghdrlfehd");
+			MemberDto memberDto = memberService.read("ghdrlfehd");
 			logger.info(memberDto.toString());
 			m.addAttribute("member", memberDto);
 		} catch(Exception e) {
