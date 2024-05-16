@@ -21,18 +21,18 @@ public class MemberRepositoryImpl implements MemberRepository {
     
 	@Override
 	public MemberDto selectOne(String memberId) throws Exception {
-		MemberDto memberDto = session.selectOne(namespace+"select", memberId); 
+		MemberDto memberDto = session.selectOne(namespace+"selectOne", memberId); 
 		return memberDto;
 	}
 
 	@Override
 	public int update(MemberDto memberDto) throws Exception {
-		return 0;
+		return session.update(namespace + "update", memberDto);
 	}
 
 	@Override
-	public int delete(MemberDto memberDto) throws Exception {
-		return 0;
+	public int delete(Integer num) throws Exception {
+		return session.delete(namespace + "delete", num);
 	}
 
 	@Override

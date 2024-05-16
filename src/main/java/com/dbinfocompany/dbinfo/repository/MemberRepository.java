@@ -8,6 +8,6 @@ public interface MemberRepository {
 	int insert(MemberDto memberDto) throws Exception;
 	MemberDto selectOne(String memberId) throws Exception;
 	int update(MemberDto memberDto) throws Exception;
-	int delete(MemberDto memberDto) throws Exception;
+	int delete(Integer num) throws Exception;
 	List<MemberDto> selectAll() throws Exception;
 }

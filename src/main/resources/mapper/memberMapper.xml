@@ -4,13 +4,72 @@
 
 <mapper namespace="com.dbinfocompany.dbinfo.repository.MemberMapper">
 	<insert id="insert" parameterType="MemberDto">
-		INSERT INTO member 
-			(member_id, member_name)	
-		VALUES
-			(#{memberId}, #{memberName})
+		INSERT INTO intechmembers (
+			num,
+			id,
+			pw,
+			name,
+			gender,
+			birthday,
+			ph,
+			type,
+			acept)
+		VALUES (
+			intechmembers_seq.nextval,
+			#{id},
+			#{pw},
+			#{name},
+			#{gender},
+			#{birthday},
+			#{ph},
+			#{type},
+			'거절')
 	</insert>
 
-    <select id="select" parameterType="String" resultType="MemberDto">
-        SELECT * FROM member where member_id = #{memberId}
+    <select id="selectOne" parameterType="String" resultType="MemberDto">
+        SELECT * 
+        FROM 
+        	intechmembers 
+        WHERE
+        	1=1
+        <if test="id != null">
+			AND id = #{id} 
+		</if>
     </select>
+    
+    <update id="update" parameterType="MemberDto">
+		UPDATE intechmembers 
+		<set>
+			<if test="pw != null" >
+				 pw=#{pw},
+			</if>
+			id=#{id}, 
+			name=#{name}, 
+			gender=#{gender}, 
+			birthday=#{birthday}, 
+			ph=#{ph}, 
+			type=#{type}
+		</set>
+		WHERE 
+			num=#{num}	
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM 
+			intechmembers
+		WHERE 
+			num = #{num}
+	</delete>
+	
+	<select id="selectAll" resultType="MemberDto">
+		SELECT 
+			* 
+		FROM 
+			intechmembers
+		WHERE
+			1=1
+			AND type = '정규직'
+		ORDER BY 
+			num
+	</select>
 </mapper>

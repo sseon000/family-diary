@@ -14,6 +14,9 @@
 		<li class="nav-item">
 			<a class="nav-link" href="register">register</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/member/list">list</a>
+		</li>
 	</ul>
 </div>
 </body>

@@ -26,12 +26,11 @@ public class RegisterController {
 	
 	@RequestMapping(value = "/register/add", method = RequestMethod.POST)
 	public String registerAdd(MemberDto member, Model m) {
-		logger.info("id : " + member.getMemberId());
-		logger.info("name : " + member.getMemberName());
+		logger.info("member : " + member.toString());
 		try {
 			int row = memberService.write(member);
 			if(row != 0) {
-				MemberDto regiMember = memberService.read(member.getMemberId());
+				MemberDto regiMember = memberService.read(member.getId());
 				logger.info("regiMember : " + regiMember.toString());
 				m.addAttribute("member", regiMember);
 				return "redirect:/";

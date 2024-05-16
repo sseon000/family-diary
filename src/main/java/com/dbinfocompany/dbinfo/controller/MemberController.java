@@ -1,5 +1,7 @@
 package com.dbinfocompany.dbinfo.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,22 @@ public class MemberController {
 		}
 		
 		return "member";
+	}
+	
+	@RequestMapping(value = "list")
+	public String memberList(Model m) throws Exception {
+		logger.info("list call");
+		
+		List<MemberDto> list = memberService.getList();
+		m.addAttribute("list", list);
+		
+		return "list";
+	}
+	
+	@RequestMapping(value = "detail")
+	public String memberDetail(Model m) throws Exception {
+		logger.info("detail call");
+		return "";
 	}
 	
 	/*

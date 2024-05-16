@@ -8,6 +8,6 @@ public interface MemberService {
 	int write(MemberDto memberDto) throws Exception;
 	MemberDto read(String memberId) throws Exception;
 	int modify(MemberDto memberDto) throws Exception;
-	int remove(MemberDto memberDto) throws Exception;
+	int remove(Integer num) throws Exception;
     List<MemberDto> getList() throws Exception;
 }

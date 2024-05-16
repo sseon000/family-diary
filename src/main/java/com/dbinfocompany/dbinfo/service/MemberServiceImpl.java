@@ -26,14 +26,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modify(MemberDto memberDto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberRepository.update(memberDto);
 	}
 
 	@Override
-	public int remove(MemberDto memberDto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int remove(Integer num) throws Exception {
+		return memberRepository.delete(num);
 	}
 
 	@Override
