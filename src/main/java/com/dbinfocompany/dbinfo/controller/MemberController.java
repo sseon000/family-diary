@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dbinfocompany.dbinfo.domain.MemberDto;
 import com.dbinfocompany.dbinfo.service.MemberService;
@@ -46,8 +47,17 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "detail")
-	public String memberDetail(Model m) throws Exception {
+	public String memberDetail(MemberDto memberDto, Model m) throws Exception {
 		logger.info("detail call");
+		logger.info("memberDto : " + memberDto);
+		MemberDto memberDetail = memberService.read(memberDto.getId());
+		m.addAttribute("member", memberDetail);
+		return "detail";
+	}
+	
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	public String memberModify(Model m) throws Exception {
+		logger.info("modify call");
 		return "";
 	}
 	

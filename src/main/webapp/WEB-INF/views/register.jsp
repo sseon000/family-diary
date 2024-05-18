@@ -14,7 +14,7 @@
 	<div class="col-md-8 form-group">
     	<input class="form-check-input" id="inputType1" name="type" value="정규직" type="radio" placeholder="type" checked>
         <label for="inputType1">정규직</label>
-    	<input class="form-check-input" id="inputType2" name="type" value="계약직" type="radio" placeholder="type">
+    	<input class="form-check-input" id="inputType2" nae="type" value="계약직" type="radio" placeholder="type">
         <label for="inputType2">계약직</label>
         <input class="form-check-input" id="inputType3" name="type" value="사업자" type="radio" placeholder="type">
         <label for="inputType3">사업자</label>
@@ -89,6 +89,7 @@
 </body>
 <script type="text/javascript">
 	let checkId = false;
+	checkId = true;
 	
 	function checkEmail(){
 		var input_id = $("#inputEmail").val();

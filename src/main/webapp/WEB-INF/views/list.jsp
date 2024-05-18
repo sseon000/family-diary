@@ -28,10 +28,8 @@
 	</c:if>
 	<c:forEach var="list" items="${list}" varStatus="vs">
 		<form action='/member/detail' method="POST">
-			<!-- 
 			<input type="hidden" name="id" value="${list.id}"/>
 			<input type="submit" id="${list.name}" style="display: none;"/>
-			 -->
 			<tr onClick="onModifyPageMove('${list.name}')" style="cursor: pointer">
 				<!-- <td align="center">${pageInfo.totalCount - ((pageInfo.pageNumber-1) * pageInfo.pageSize) - vs.count + 1}</td>  -->
 				<td>${list.name}</td>	
@@ -44,4 +42,12 @@
 	</c:forEach>
 </table>
 </body>
+<script type="text/javascript">
+
+	function onModifyPageMove(el) {
+		let d= "#"+el
+		$(d).click()
+	}
+
+</script>
 </html>
