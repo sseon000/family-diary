@@ -1,5 +1,7 @@
 package com.dbinfocompany.dbinfo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,28 @@ public class MemberServiceImpl implements MemberService {
 	MemberRepository memberRepository;
 
 	@Override
-	public MemberDto getMember(String memberId) throws Exception {
+	public int write(MemberDto memberDto) throws Exception {
+		return memberRepository.insert(memberDto);
+	}
+	
+	@Override
+	public MemberDto read(String memberId) throws Exception {
 		MemberDto memberDto = memberRepository.selectOne(memberId);
 		return memberDto;
 	}
 
+	@Override
+	public int modify(MemberDto memberDto) throws Exception {
+		return memberRepository.update(memberDto);
+	}
+
+	@Override
+	public int remove(Integer num) throws Exception {
+		return memberRepository.delete(num);
+	}
+
+	@Override
+	public List<MemberDto> getList() throws Exception {
+		return memberRepository.selectAll();
+	}
 }
