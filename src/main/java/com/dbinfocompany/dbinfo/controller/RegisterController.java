@@ -21,7 +21,7 @@ public class RegisterController {
 	@RequestMapping(value = "/register")
 	public String registerForm() {
 		logger.info("register call");
-		return "register";
+		return "registerForm";
 	}
 	
 	@RequestMapping(value = "/register/add", method = RequestMethod.POST)
