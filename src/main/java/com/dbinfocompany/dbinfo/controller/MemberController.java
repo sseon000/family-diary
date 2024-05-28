@@ -18,8 +18,12 @@ import com.dbinfocompany.dbinfo.service.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	private final MemberService memberService;
+	
 	@Autowired
-	MemberService memberService;
+	public MemberController(MemberService memberService) {
+		this.memberService = memberService;
+	}
 	
 	@RequestMapping(value = "member")
 	public String member(Model m) {

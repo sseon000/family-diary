@@ -15,8 +15,12 @@ import com.dbinfocompany.dbinfo.service.MemberService;
 public class RegisterController {
 	private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 	
+	private final MemberService memberService;
+	
 	@Autowired
-	MemberService memberService;
+	public RegisterController(MemberService memberService) {
+		this.memberService = memberService;
+	}
 	
 	@RequestMapping(value = "/register")
 	public String registerForm() {

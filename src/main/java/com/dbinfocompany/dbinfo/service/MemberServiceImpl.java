@@ -10,8 +10,13 @@ import com.dbinfocompany.dbinfo.repository.MemberRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
+	private final MemberRepository memberRepository;
+	
 	@Autowired
-	MemberRepository memberRepository;
+	public MemberServiceImpl(MemberRepository memberRepository) {
+		this.memberRepository = memberRepository;
+	}
 
 	@Override
 	public int write(MemberDto memberDto) throws Exception {
