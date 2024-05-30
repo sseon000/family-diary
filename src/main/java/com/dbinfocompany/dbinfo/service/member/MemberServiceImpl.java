@@ -1,12 +1,12 @@
-package com.dbinfocompany.dbinfo.service;
+package com.dbinfocompany.dbinfo.service.member;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dbinfocompany.dbinfo.domain.MemberDto;
-import com.dbinfocompany.dbinfo.repository.MemberRepository;
+import com.dbinfocompany.dbinfo.domain.member.MemberDto;
+import com.dbinfocompany.dbinfo.repository.member.MemberRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {

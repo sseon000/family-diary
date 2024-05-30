@@ -1,4 +1,4 @@
-package com.dbinfocompany.dbinfo.repository;
+package com.dbinfocompany.dbinfo.repository.member;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.dbinfocompany.dbinfo.domain.MemberDto;
+import com.dbinfocompany.dbinfo.domain.member.MemberDto;
 
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {

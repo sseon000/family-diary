@@ -1,8 +1,8 @@
-package com.dbinfocompany.dbinfo.service;
+package com.dbinfocompany.dbinfo.service.member;
 
 import java.util.List;
 
-import com.dbinfocompany.dbinfo.domain.MemberDto;
+import com.dbinfocompany.dbinfo.domain.member.MemberDto;
 
 public interface MemberService {
 	int write(MemberDto memberDto) throws Exception;
