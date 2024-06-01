@@ -1,4 +1,4 @@
-package com.dbinfocompany.dbinfo.domain;
+package com.dbinfocompany.dbinfo.domain.member;
 
 import java.util.Objects;
 

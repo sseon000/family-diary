@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html lang="ko" class="fontawesome-i2svg-active fontawesome-i2svg-complete">
 <head>  
 	<title>dbinfo</title>
@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="desc">
 	<meta name="author" content="dbinfo">
+	<sec:csrfMetaTags />
 	<%@ include file="/WEB-INF/views/include/head_css.jsp"%>
 <style>
 header.masthead {

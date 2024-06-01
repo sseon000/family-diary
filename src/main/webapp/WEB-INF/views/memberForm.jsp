@@ -81,7 +81,7 @@ header.masthead .masthead-heading {
                             <div class="card shadow-lg border-0 rounded-lg">
                                 <div class="card-header" id="registerTag"><h3 class="text-center font-weight-light my-4">회원가입</h3></div>
                                 <div class="card-body">
-                                    <form id="registerInput" action="register.members" method="post">
+                                    <form id="registerInput" action="/member/add" method="post">
                                     	<div class="col-md-8 form-group">
                                         	<input class="form-check-input" id="inputType1" name="type" value="정규직" type="radio" placeholder="type" checked>
                                             <label for="inputType1">정규직</label>
@@ -173,7 +173,7 @@ header.masthead .masthead-heading {
 	<%-- ******* CUSTOM Script HERE ******* --%>
 	<%@ include file="/WEB-INF/views/include/footer_script.jsp"%>
 	<script type="text/javascript">
-		let checkId = false;
+		let checkId = true;
 		
 		function checkEmail(){
 			

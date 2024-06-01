@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/security
+             http://www.springframework.org/schema/security/spring-security.xsd">
+             
+    <!-- 자동설정 on, SpEL 사용 -->
+	<http auto-config="true" use-expressions="true">
+		<!-- 전체허용 -->
+		<intercept-url pattern="/resources/**" access="permitAll" />
+	  	<intercept-url pattern="/main" access="permitAll" />
+	  	<intercept-url pattern="/member" access="permitAll" />
+	  	<intercept-url pattern="/login" access="permitAll" />
+	  	
+		<!-- Member허용	  	
+	  	<intercept-url pattern="/**" access="hasRole('ROLE_MEMBER')" />
+	  	-->
+	  	<form-login 
+	  		username-parameter="id" 
+			password-parameter="pw"
+			login-processing-url="/login" 
+			login-page="/login"
+			default-target-url="/"
+			authentication-failure-url="/login"
+	  	/>
+	  	
+	  	<!-- <csrf disabled="true" />  -->
+	</http>
+	
+	<authentication-manager>
+	  <authentication-provider>
+	    <user-service>
+	      <user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+	    </user-service>
+	  </authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

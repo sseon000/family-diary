@@ -18,8 +18,8 @@
 					<li class="nav-item"><a class="nav-link" href="preprocessing.data">DATA</a></li>
 				</c:if>
 				<c:if test="${empty loginInfo }">
-					<li class="nav-item"><a class="nav-link" href="login.members">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="register">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="/member">회원가입</a></li>
 				</c:if>
 				<c:if test="${not empty loginInfo}">
 					<c:if test="${loginInfo.type ne '운영자'}">

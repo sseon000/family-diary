@@ -8,6 +8,6 @@
         <setting name="callSettersOnNulls" value="true"/>
     </settings>
 	<typeAliases>
-		<typeAlias alias="MemberDto" type="com.dbinfocompany.dbinfo.domain.MemberDto" />
+		<typeAlias alias="MemberDto" type="com.dbinfocompany.dbinfo.domain.member.MemberDto" />
 	</typeAliases>
 </configuration>
