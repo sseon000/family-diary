@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HELP.md
 .gradle
 build/
@@ -35,3 +36,47 @@ out/
 
 ### VS Code ###
 .vscode/
+=======
+# Miscellaneous
+*.java.hsp
+*.sonarj
+*.sw*
+.DS_Store
+build.sh
+integration-repo
+ivy-cache
+argfile*
+activemq-data/
+classes/
+*.jar
+target
+
+# Log files
+jxl.log
+jmx.log
+derby.log
+
+# Maven artifacts
+src/main/webapp/META-INF/maven/
+
+# Eclipse artifacts, including WTP generated manifests
+bin
+.classpath
+.project
+.settings
+.springBeans
+spring-*/src/main/java/META-INF/MANIFEST.MF
+
+# IDEA artifacts and output dirs
+*.iml
+*.ipr
+*.iws
+.idea
+out
+test-output
+atlassian-ide-plugin.xml
+cached-antora-playbook.yml
+
+# .properties files ##
+src/main/**/*.properties
+>>>>>>> 1cb356c3ca08795f4787d5a342b325c1c80df67a
