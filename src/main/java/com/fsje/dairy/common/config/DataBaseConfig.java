@@ -1,65 +1,109 @@
 package com.fsje.dairy.common.config;
 
-import javax.management.ObjectName;
+import java.io.IOException;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.zaxxer.hikari.HikariDataSource;
-/*
 @Configuration
-@EnableTransactionManagement(order = 1, proxyTargetClass = true)
-@ImportResource(locations = {"classpath:/config/database/transaction-config.xml"})
-*/
+/**
+ * 어노테이션 기반 트랜잭션관리 사용 설정
+ * <tx:annotation-driven>
+ */
+@EnableTransactionManagement
+@PropertySource("application.properties")
 public class DataBaseConfig {
-	//@Value("classpath*:/com/fsje/dairy/**/*.sqlx")
-	/*
+	@Value("${spring.datasource.driver-class-name}")
+	private String driverClassName;
+	@Value("${spring.datasource.url}")
+	private String url;
+	@Value("${spring.datasource.username}")
+	private String username;
+	@Value("${spring.datasource.password}")
+	private String password;
+	@Value("classpath*:/com/fsje/dairy/**/*.sqlx")
 	private Resource[] mapperLocations;
-
-	@Value("classpath*:/config/database/mybatis-config.xml")
+	@Value("classpath:/config/mybatis-config.xml")
 	private Resource configLocations;
-	
+
+	/**
+	 * DataSource설정
+	 * @param driverClassName
+	 * @param url
+	 * @param username
+	 * @param password
+	 * @reutrn dataSource  
+	 */
 	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource")
 	public DataSource dataSource() {
-		return DataSourceBuilder.create().build(); 
+	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	    dataSource.setDriverClassName(driverClassName);
+	    dataSource.setUrl(url);
+	    dataSource.setUsername(username);
+	    dataSource.setPassword(password);
+
+	    return dataSource;
 	}
-	
+
+	/**
+	 * TransactionManager설정
+	 * @param dataSource  
+	 */
 	@Bean
-	public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
+	public PlatformTransactionManager transactionManager(DataSource dataSource) {
+		return new DataSourceTransactionManager(dataSource);
+	}
+		
+	/**  
+	 * SqlSessionFactory 설정  
+	 *  
+	 * <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+	 *  <property name="dataSource" ref="dataSource" />  
+	 *  <property name="configLocation" value="classpath:mybatis/configuration.xml" />  
+	 * <property name="mapperLocations" value="classpath:mybatis/mappers/** /*.xml" />  
+	 * </bean>  
+	 *  
+	 * @param dataSource  
+	 * @param mapperLocations 
+	 * @param configLocations 
+	 * @return  
+	 * @throws IOException  
+	 */
+	@Bean
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
 		sqlSessionFactory.setConfigLocation(configLocations);
 		sqlSessionFactory.setMapperLocations(mapperLocations);
-		
+			
 		return sqlSessionFactory.getObject();
 	}
-	
-	@Bean
-	public DataSourceMonitoring dataSourceMonitoring(@Qualifier("dataSource") HikariDataSource dataSource) throws Exception {
-		ObjectName objectName = new ObjectName("com.fsje:type=DataSource,name=hikari-pool,context=/");
-		DataSourceMonitoring dataSourceMonitoring = new DataSourceMonitoring(dataSource,objectName);
 		
-		return dataSourceMonitoring;
+	/**  
+	  * SqlSessionTemplate 설정  
+	  *  
+	  * <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">  
+	  *  <constructor-arg ref="sqlSessionFactory" />  
+	  * </bean>  
+	  *  
+	  * @param sqlSessionFactory  
+	  * @return  
+	  */
+	@Bean 
+	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+		return new SqlSessionTemplate(sqlSessionFactory);
 	}
-	
-	@Bean
-	@Primary
-	public SqlManager sqlManager(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
-		SqlManager sqlManager = new SqlManager();
-		sqlManager.setSqlSessionFactory(sqlSessionFactory);
-		return sqlManager
-	}
-	*/
 }

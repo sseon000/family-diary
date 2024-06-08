@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
  * @todo   : 서비스호출
  * @since  : 2024.06.02
  */
-
 @Controller
 @Slf4j
 @RequestMapping("diary")

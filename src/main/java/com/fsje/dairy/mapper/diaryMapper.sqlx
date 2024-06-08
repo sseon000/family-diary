@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsje.dairy.dao.DiaryDao">
+
+	<!-- 다이어리 등록 -->
+	<insert id="insertDiary" parameterType="DiaryDto">
+		INSERT INTO intechmembers ( /* []
+			num,
+			id,
+			pw,
+			name,
+			gender,
+			birthday,
+			ph,
+			type,
+			acept)
+		VALUES (
+			intechmembers_seq.nextval,
+			#{id},
+			#{pw},
+			#{name},
+			#{gender},
+			#{birthday},
+			#{ph},
+			#{type},
+			'거절')
+	</insert>
+	
+</mapper>
