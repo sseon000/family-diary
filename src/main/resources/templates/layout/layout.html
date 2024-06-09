@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring boot</title>
+</head>
+<body>
+	<!-- <div>header</div> -->
+	<nav th:replace="~{fragment/header :: headerFragment}"></nav>
+	
+	<!-- main  -->
+	<th:block layout:fragment="content" class="content"></th:block>
+	
+	<!-- <div>footer</div> -->
+	<footer th:replace="~{fragment/footer :: footerFragment}"></footer>
+</body>
+</html>

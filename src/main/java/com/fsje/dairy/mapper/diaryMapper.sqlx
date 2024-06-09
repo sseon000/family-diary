@@ -6,26 +6,36 @@
 
 	<!-- 다이어리 등록 -->
 	<insert id="insertDiary" parameterType="DiaryDto">
-		INSERT INTO intechmembers ( /* []
-			num,
-			id,
-			pw,
-			name,
-			gender,
-			birthday,
-			ph,
-			type,
-			acept)
-		VALUES (
-			intechmembers_seq.nextval,
-			#{id},
-			#{pw},
-			#{name},
-			#{gender},
-			#{birthday},
-			#{ph},
-			#{type},
-			'거절')
+		insert into DIARY ( /* [insertDiary][다이어리 등록][KSH][2024.06.09] */
+			DIARY_ID      /* ID */
+		  , DIARY_TITLE   /* 다이어리 제목 */
+		  , DIARY_CONTENT /* 다이어리 내용 */
+		  , REG_USER      /* 등록자 */
+		  , MODI_USER )   /* 수정자 */
+		values (
+			DIARY_SEQ.NEXTVAL
+		  , #{diaryTitle}
+		  , #{diaryContent}
+		  , #{userId}
+		  , #{userId}
+		)
 	</insert>
+	
+	<!-- 다이어리 조회 -->
+	<select id="selectDiaryList" parameterType="DiaryDto" resultType="DiaryDto">
+		select /* [selectDiaryList][다이어리 조회][KSH][2024.06.09] */
+			DIARY_ID       /* ID */
+		  , DIARY_TITLE    /* 다이어리 제목 */
+		  , DIARY_CONTENT  /* 다이어리 내용 */
+		  , REG_USER       /* 등록자 */
+		  , MODI_USER )    /* 수정자 */
+		from 
+			DIARY
+		where 
+			1=1
+		<if test="diaryId != null and diaryId != ''">
+			and DIARY_ID = #{diaryId}
+		</if>
+	</select>
 	
 </mapper>

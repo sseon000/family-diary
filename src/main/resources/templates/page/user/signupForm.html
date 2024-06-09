@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link  th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+	<h1>회원가입</h1>
+	<form th:action="@{/signup}" th:object="${userDto}" method="post">
+		<div class="mb-3">
+			<label for="userId" class="form-label">사용자ID</label>
+			<input type="email" th:field="*{userId}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="userPassword" class="form-label">비밀번호</label>
+			<input type="password" th:field="*{userPassword}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="userPasswordCheck" class="form-label">비밀번호 확인</label>
+			<input type="password" th:field="*{userPasswordCheck}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="userName" class="form-label">이름</label>
+			<input type="text" th:field="*{userName}" class="form-control">
+		</div>
+		<button type="submit" class="btn btn-primary">회원가입</button>
+	</form>
+</div>
+</body>
+</html>
