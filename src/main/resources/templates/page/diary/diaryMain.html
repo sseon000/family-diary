@@ -11,18 +11,38 @@
 	
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:inline="javascript"></script>
+	<script th:inline="javascript">
+			$(function(){
+				$("#searchBtn").click(function(){
+					//Search btn click
+					let param = $("#searchForm").serialize();
+					param = { diaryDto: param };
+					$.ajax({
+						type:"put",
+						url:"/diary/getDiaryList",
+						dataType: "json",
+						contentType: "application/json",
+						data:JSON.stringify(param),
+						success:function(diaryList){					
+							$("#diaryTable").replaceWith(diaryList);
+						}
+					});	
+				});			
+			});        
+		</script>
 </head>
 <body>
 	<div layout:fragment="content">
 		<h1>main</h1>
 		<div>diary 목록</div>
-		<form>
-			<input type="text" id="diaryId" name="diaryId" />
-		    <input type="text" id="diaryTitle" name="diaryTitle" />
-		    <input type="text" id="diaryContent" name="diaryContent" /> </br >
-			<input type="submit" id="searchBtn" value="조회"/>
+		<!-- <form th:action="@{/diary/getDiaryList}"> -->
+		<form id="searchForm" th:object="${diaryDto}">
+			<input type="text" th:field="*{diaryId}"  />
+		    <input type="text" th:field="*{diaryTitle}" />
+		    <input type="text" th:field="*{diaryContent}"  /> </br >
+			<!-- <input type="submit" id="searchBtn" value="조회"/> -->
 		</form>
+		<input type="button" id="searchBtn" value="조회"/>
 		<div th:unless="${#lists.isEmpty(diaryList)}">
 			<p>목록이 없습니다.</p>
 		</div>
@@ -50,20 +70,4 @@
 		</div>
 	</div>
 </body>
-<script th:inline="javascript">
-	$(function(){
-		//Search btn click
-		$("#searchBtn").click(function(){
-			$.ajax({
-				type:"get",
-				url:"diary/getDiaryList",
-				dataType: "json",
-				data:JSON.stringify(param),
-				success:function(diaryList){					
-					$("#diaryTable").replaceWith(diaryList);
-				}
-			});	
-		});			
-	});        
-</script>
 </html>

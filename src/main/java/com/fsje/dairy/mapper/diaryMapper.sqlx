@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fsje.dairy.dao.DiaryDao">
+<mapper namespace="diaryDao">
 
 	<!-- 다이어리 등록 -->
 	<insert id="insertDiary" parameterType="DiaryDto">
@@ -28,7 +28,7 @@
 		  , DIARY_TITLE    /* 다이어리 제목 */
 		  , DIARY_CONTENT  /* 다이어리 내용 */
 		  , REG_USER       /* 등록자 */
-		  , MODI_USER )    /* 수정자 */
+		  , MODI_USER      /* 수정자 */
 		from 
 			DIARY
 		where 

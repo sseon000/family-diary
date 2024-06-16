@@ -4,9 +4,11 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.fsje.dairy.controller.DiaryController;
 import com.fsje.dairy.dto.DiaryDto;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @file   : DiaryDao
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
  */
 @Repository
 @AllArgsConstructor
+@Slf4j
 public class DiaryDao {
 	private final SqlSessionTemplate sqlSessionTemplate;
 	
@@ -39,6 +42,7 @@ public class DiaryDao {
 	 * @return : {list} List<DiaryDto>
 	 */
 	public List<DiaryDto> selectDiaryList(DiaryDto diaryDto) {
-		return sqlSessionTemplate.selectList("selectDiaryList", diaryDto);
+		log.info(diaryDto.toString());
+		return sqlSessionTemplate.selectList("diaryDao.selectDiaryList", diaryDto);
 	}
 }
