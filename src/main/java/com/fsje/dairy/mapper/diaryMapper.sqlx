@@ -36,6 +36,9 @@
 		<if test="diaryId != null and diaryId != ''">
 			and DIARY_ID = #{diaryId}
 		</if>
+		<if test="diaryTitle != null and diaryTitle != ''">
+			and DIARY_TITLE = #{diaryTitle}
+		</if>
 	</select>
 	
 </mapper>

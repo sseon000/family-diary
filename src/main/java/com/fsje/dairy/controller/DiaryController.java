@@ -3,6 +3,7 @@ package com.fsje.dairy.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,8 +47,10 @@ public class DiaryController {
 	@RequestMapping(value = "/getDiaryList", method = RequestMethod.PUT)
 	@ResponseBody
 	public List<DiaryDto> getDiaryList(@RequestBody DiaryDto diaryDto) {
+	//public String getDiaryList(@RequestBody DiaryDto diaryDto, Model model) {
 		log.info(diaryDto.toString());
 		List<DiaryDto> diaryList = diaryService.getDiaryList(diaryDto);
+		//model.addAttribute("diaryList", diaryList);
 		return diaryList;
 	}
 }

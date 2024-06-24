@@ -15,16 +15,42 @@
 			$(function(){
 				$("#searchBtn").click(function(){
 					//Search btn click
-					let param = $("#searchForm").serialize();
-					param = { diaryDto: param };
+					
+					let param = {
+						"diaryId": $('#diaryId').val(),
+						"diaryTitle": $('#diaryTitle').val(),
+						"diaryContent": $('#diaryContent').val()
+					}
+					
+					debugger
+					//let param = $("#searchForm").serialize();
+					//param = { diaryDto: param };
 					$.ajax({
 						type:"put",
 						url:"/diary/getDiaryList",
 						dataType: "json",
 						contentType: "application/json",
 						data:JSON.stringify(param),
-						success:function(diaryList){					
-							$("#diaryTable").replaceWith(diaryList);
+						success:function(diaryList){
+							console.log(diaryList);
+							console.log(typeof diaryList);
+							let tr;
+							let td;
+							let diaryDto;
+							for(let i=0; i<diaryList.length; i++) {
+								diaryDto = diaryList[i];
+								tr = document.createElement('tr');
+								tr.setAttribute("id", i + "_diaryDto");
+								
+								for(const [key, value] of Object.entries(diaryDto)) {
+									td = document.createElement('td');
+									td.setAttribute("id", i + "_key");
+									td.innerText = value;
+									tr.appendChild(td);
+								} 
+												
+								$('#diaryTable > tbody')[0].appendChild(tr);	
+							}	
 						}
 					});	
 				});			
@@ -43,11 +69,7 @@
 			<!-- <input type="submit" id="searchBtn" value="조회"/> -->
 		</form>
 		<input type="button" id="searchBtn" value="조회"/>
-		<div th:unless="${#lists.isEmpty(diaryList)}">
-			<p>목록이 없습니다.</p>
-		</div>
-		<div th:if="${!#lists.isEmpty(diaryList)}">
-			<table id="diaryTable">
+		<table id="diaryTable">
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -58,6 +80,7 @@
 				 </tr>
 			</thead>
 			<tbody>
+				<!--
 				<tr th:each="diary : ${diaryList}">
 				    <td th:text="${diary.diaryId}"></td>    
 				    <td th:text="${diary.diaryTitle}"></td>
@@ -65,9 +88,9 @@
 				    <td th:text="${diary.modiUserId}"></td>
 				    <td th:text="${diary.modiAt}"></td>
 				</tr>
+				-->
 			</tbody>
-			</table>
-		</div>
+		</table>
 	</div>
 </body>
 </html>
