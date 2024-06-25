@@ -12,10 +12,8 @@ import lombok.AllArgsConstructor;
 /**
  * @file   : DiaryService
  * @author : KSH
- * @brief  : 다이어리 Service
- * @see    : N/A
- * @todo   : N/A
  * @since  : 2024.06.09
+ * @brief  : 다이어리 Service
  */
 @Service
 @AllArgsConstructor
@@ -23,13 +21,13 @@ public class DiaryService {
 	private final DiaryDao diaryDao;
 	
 	/**
-	 * @method   : getDiaryList
+	 * @method : diaryList
 	 * @author : KSH
 	 * @since  : 2024.06.09
 	 * @param  : {obejct} DiaryDto
 	 * @return : {list} List<DiaryDto>
 	 */
-	public List<DiaryDto> getDiaryList(DiaryDto diaryDto) {
-		return diaryDao.selectDiaryList(diaryDto);
+	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
+		return diaryDao.diarySelect(diaryDto);
 	}
 }

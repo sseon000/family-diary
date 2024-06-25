@@ -8,10 +8,8 @@ import lombok.Getter;
 /**
  * @file   : Json<T>
  * @author : KSH
- * @brief  : response json
- * @see    : N/A
- * @todo   : msgCd Enum만들기, builder pattern 주석
  * @since  : 2024.06.16
+ * @brief  : response json
  */
 @Getter
 @Builder

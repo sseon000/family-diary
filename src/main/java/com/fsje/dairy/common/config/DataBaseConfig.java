@@ -20,9 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * @file   : DataBaseConfig
  * @author : KSH
- * @brief  : 데이터베이스 컨피그
- * @see    : N/A
  * @since  : 2024.06.09
+ * @brief  : 데이터베이스 컨피그
  */
 @Configuration
 /**

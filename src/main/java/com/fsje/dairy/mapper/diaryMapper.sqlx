@@ -5,8 +5,8 @@
 <mapper namespace="diaryDao">
 
 	<!-- 다이어리 등록 -->
-	<insert id="insertDiary" parameterType="DiaryDto">
-		insert into DIARY ( /* [insertDiary][다이어리 등록][KSH][2024.06.09] */
+	<insert id="idartInsert" parameterType="DiaryDto">
+		insert into DIARY ( /* [insertDiary][다이어리 등록][KSH][2024.06.25] */
 			DIARY_ID      /* ID */
 		  , DIARY_TITLE   /* 다이어리 제목 */
 		  , DIARY_CONTENT /* 다이어리 내용 */
@@ -22,7 +22,7 @@
 	</insert>
 	
 	<!-- 다이어리 조회 -->
-	<select id="selectDiaryList" parameterType="DiaryDto" resultType="DiaryDto">
+	<select id="diarySelect" parameterType="DiaryDto" resultType="DiaryDto">
 		select /* [selectDiaryList][다이어리 조회][KSH][2024.06.09] */
 			DIARY_ID       /* ID */
 		  , DIARY_TITLE    /* 다이어리 제목 */

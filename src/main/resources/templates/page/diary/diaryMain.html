@@ -27,7 +27,7 @@
 					//param = { diaryDto: param };
 					$.ajax({
 						type:"put",
-						url:"/diary/getDiaryList",
+						url:"/diary/list",
 						dataType: "json",
 						contentType: "application/json",
 						data:JSON.stringify(param),
@@ -61,12 +61,10 @@
 	<div layout:fragment="content">
 		<h1>main</h1>
 		<div>diary 목록</div>
-		<!-- <form th:action="@{/diary/getDiaryList}"> -->
 		<form id="searchForm" th:object="${diaryDto}">
 			<input type="text" th:field="*{diaryId}"  />
 		    <input type="text" th:field="*{diaryTitle}" />
 		    <input type="text" th:field="*{diaryContent}"  /> </br >
-			<!-- <input type="submit" id="searchBtn" value="조회"/> -->
 		</form>
 		<input type="button" id="searchBtn" value="조회"/>
 		<table id="diaryTable">
@@ -80,15 +78,7 @@
 				 </tr>
 			</thead>
 			<tbody>
-				<!--
-				<tr th:each="diary : ${diaryList}">
-				    <td th:text="${diary.diaryId}"></td>    
-				    <td th:text="${diary.diaryTitle}"></td>
-				    <td th:text="${diary.diaryContent}"></td>
-				    <td th:text="${diary.modiUserId}"></td>
-				    <td th:text="${diary.modiAt}"></td>
-				</tr>
-				-->
+
 			</tbody>
 		</table>
 	</div>

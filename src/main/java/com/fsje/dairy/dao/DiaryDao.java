@@ -13,9 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @file   : DiaryDao
  * @author : KSH
- * @brief  : 다이어리 DAO
- * @see    : N/A
  * @since  : 2024.06.09
+ * @brief  : 다이어리 DAO
  */
 @Repository
 @AllArgsConstructor
@@ -24,25 +23,24 @@ public class DiaryDao {
 	private final SqlSessionTemplate sqlSessionTemplate;
 	
 	/**
-	 * @method   : DiaryDao
+	 * @method : diaryInsert
 	 * @author : KSH
-	 * @since  : 2024.06.09
-	 * @param  : {class} DiaryDto
+	 * @since  : 2024.06.25
+	 * @param  : {obejct} DiaryDto
 	 * @return : {Integer} int
 	 */
-	public int insertDairy(DiaryDto diaryDto) {
-		return sqlSessionTemplate.insert("insertDairy", diaryDto);
+	public int dairyInsert(DiaryDto diaryDto) {
+		return sqlSessionTemplate.insert("diaryDao.dairyInsert", diaryDto);
 	}
 	
 	/**
-	 * @method   : selectDiaryList
+	 * @method : diarySelect
 	 * @author : KSH
 	 * @since  : 2024.06.09
 	 * @param  : {obejct} DiaryDto
 	 * @return : {list} List<DiaryDto>
 	 */
-	public List<DiaryDto> selectDiaryList(DiaryDto diaryDto) {
-		log.info(diaryDto.toString());
-		return sqlSessionTemplate.selectList("diaryDao.selectDiaryList", diaryDto);
+	public List<DiaryDto> diarySelect(DiaryDto diaryDto) {
+		return sqlSessionTemplate.selectList("diaryDao.diarySelect", diaryDto);
 	}
 }
