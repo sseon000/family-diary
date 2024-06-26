@@ -8,12 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @file   : MainController
  * @author : KSH
- * @brief  : 프로젝트 메인 컨트롤러
- * @see    : N/A
- * @todo   : N/A
  * @since  : 2024.06.02
+ * @brief  : 프로젝트 메인 컨트롤러
  */
-
 @Controller
 @Slf4j
 public class MainController {

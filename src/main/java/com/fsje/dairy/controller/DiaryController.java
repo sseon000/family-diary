@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fsje.dairy.dto.DiaryDto;
 import com.fsje.dairy.service.DiaryService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,14 +22,22 @@ import lombok.extern.slf4j.Slf4j;
  * @brief  : 다이어리 Controller
  */
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor //초기화 되지 않은 final필드와 @NonNull 어노테이션이 붙은 필드에 대한 생성자 생성
 @Slf4j
 @RequestMapping("/diary")
 public class DiaryController {
+	/**
+	 * 의존성 주입(DI) : 생성자, setter, 필드 
+	 * 생성자 주입 권장
+	 * 1. 객체의 불변성 확보 : 생성자는 호출 시점에 1회만 호출됨
+	 * 2. 테스트 코드의 작성 : 스프링의 의존성 주입을 맡기지 않고 순수 자바 코드를 이용할 수 있음
+	 * 3. lombok + @Autowired 생략 : lombok의 RequiredArgsConstructor를 이용해 생성자 방식 의존성 주입 + 생성자가 1개만 있을경우 @Autowired 생략
+	 * 4. 순환 참조 에러 방지 :
+	 */
 	private final DiaryService diaryService;
 	
 	/**
-	 * 다이어리 메인 화면
+	 * 다이어리 화면
 	 * 
 	 * @method : pageDiaryList
 	 * @author : KSH
@@ -40,7 +48,7 @@ public class DiaryController {
 	@GetMapping("")
 	public String pageDiaryList(DiaryDto diaryDto) {
 		log.info("### DiaryController.pageDiaryList, {}", "pageDiaryList");
-		return "page/diary/diaryMain";
+		return "page/diary/DiaryMain";
 	}
 	
 	/**
@@ -55,7 +63,8 @@ public class DiaryController {
 	@GetMapping(value = "/save")
 	public String pageDiarySave(DiaryDto diaryDto) {
 		log.info("### DiaryController.pageDiarySave, {}", "pageDiarySave");
-		return "page/diary/diarySave";
+		
+		return "page/diary/DiarySave";
 	}
 	
 	/**
@@ -67,11 +76,12 @@ public class DiaryController {
 	 * @param  : {obejct} DiaryDto
 	 * @return : {list} List<DiaryDto>
 	 */
-	@PutMapping(value = "/list")
+	@PutMapping(value = "")
 	@ResponseBody
 	public List<DiaryDto> diaryList(@RequestBody DiaryDto diaryDto) {
 		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
 		List<DiaryDto> diaryList = diaryService.diaryList(diaryDto);
+		
 		return diaryList;
 	}
 	

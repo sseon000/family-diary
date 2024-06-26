@@ -1,0 +1,58 @@
+<!-- 
+######################################################################
+# Filename : DiaryMain.html
+# Description : 다이어리 메인 화면
+# author : KSH
+# since : 2024.06.05
+######################################################################
+-->
+<!DOCTYPE html>
+<html lang="ko" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="col-sm-12">		
+			<h1>main</h1>
+			<form id="searchForm">
+				<fieldset>
+					<legend>diary 목록</legend>
+					<dl>
+						<dt>
+							<label th:for="diaryTitle">제목 : </label>
+						</dt>
+						<dd>
+					    	<input type="text" id="diaryTitle" name="diaryTitle" />
+						</dd>
+						<dt>
+							<label th:for="diaryContent">내용 : </labe>
+						</dt>
+						<dd>
+					    	<input type="text" id="diaryContent" name="diaryContent" />
+						</dd>
+						<dd>
+							<input type="button" id="searchBtn" value="조회"/>				
+						</dd>
+					</dl>
+				</fieldset>
+			</form>
+			<table id="diaryTable" class="table table-stripted table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Id</th>
+					    <th>Title</th>
+					    <th>Content</th>
+					    <th>Modi User</th>
+					    <th>Modi At</th>
+					 </tr>
+				</thead>
+				<tbody>
+	
+				</tbody>
+			</table>
+		</div>
+		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="js/page/diary/DiaryMain"></script>
+	</div>
+</body>
+</html>
