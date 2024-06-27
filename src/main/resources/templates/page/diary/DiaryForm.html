@@ -1,0 +1,33 @@
+<!-- 
+######################################################################
+# Filename : DiaryForm.html
+# Description : 다이어리 등록 화면
+# author : KSH
+# since : 2024.06.05
+######################################################################
+-->
+<!DOCTYPE html>
+<html lang="ko" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>회원가입</h1>
+			<form id="diaryRegForm">
+				<div class="mb-3">
+					<label for="diaryTitle" class="form-label">제목</label>
+					<input type="text" class="form-control" id="diaryTitle" name="diaryTitle">
+				</div>
+				<div class="mb-3">
+					<label for="diaryContent" class="form-label">내용</label>
+					<textarea class="form-control" id="diaryContent" name="diaryContent" rows="3"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">회원가입</button>
+			</form>
+		</div>
+		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="js/page/diary/DiaryForm"></script>
+	</div>
+</body>
+</html>

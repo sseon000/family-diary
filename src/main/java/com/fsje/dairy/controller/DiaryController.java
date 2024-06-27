@@ -60,11 +60,11 @@ public class DiaryController {
 	 * @param  : {}
 	 * @return : {sting} page/diary/diarySave
 	 */
-	@GetMapping(value = "/save")
-	public String pageDiarySave(DiaryDto diaryDto) {
-		log.info("### DiaryController.pageDiarySave, {}", "pageDiarySave");
+	@GetMapping(value = "/reg")
+	public String pageDiaryForm(DiaryDto diaryDto) {
+		log.info("### DiaryController.pageDiaryForm, {}", "pageDiaryForm");
 		
-		return "page/diary/DiarySave";
+		return "page/diary/DiaryForm";
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class DiaryController {
 	 * @param  : {}
 	 * @return : {sting} 
 	 */
-	@PutMapping(value = "/save")
+	@PutMapping(value = "/reg")
 	@ResponseBody
 	public String diarySave(@RequestBody DiaryDto diaryDto) {
 		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
