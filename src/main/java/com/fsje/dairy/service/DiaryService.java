@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dao.DiaryDao;
 import com.fsje.dairy.dto.DiaryDto;
 
@@ -29,5 +30,16 @@ public class DiaryService {
 	 */
 	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
 		return diaryDao.diarySelect(diaryDto);
+	}
+	
+	/**
+	 * @method : diarySave
+	 * @author : KSH
+	 * @since  : 2024.06.29
+	 * @param  : {obejct} DiaryDto
+	 * @return : {int} 
+	 */
+	public int diarySave(DiaryDto diaryDto) {
+		return diaryDao.dairyInsert(diaryDto);
 	}
 }

@@ -24,10 +24,10 @@
 					<label for="diaryContent" class="form-label">내용</label>
 					<textarea class="form-control" id="diaryContent" name="diaryContent" rows="3"></textarea>
 				</div>
-				<button type="submit" class="btn btn-primary">회원가입</button>
 			</form>
+			<button type="submit" class="btn btn-primary" id="regBtn" name="regBtn">등록하기</button>
 		</div>
-		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="js/page/diary/DiaryForm"></script>
+		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/diary/DiaryForm"></script>
 	</div>
 </body>
 </html>

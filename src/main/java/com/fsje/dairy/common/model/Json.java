@@ -2,7 +2,6 @@ package com.fsje.dairy.common.model;
 
 import org.springframework.http.HttpStatus;
 
-import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -12,21 +11,30 @@ import lombok.Getter;
  * @brief  : response json
  */
 @Getter
-@Builder
 public class Json<T> {
 	private Integer status;
-	private String msgCd;
+	private String message;
+	private String messageCode;
 	private T result;
 	
-	public static <T> Json<T> res(T result) {
-		return res(result, null, null); 
+	static public <T> Json<T> createSuccessJson(T result, String messageCode) {
+		Json<T> json = new Json<T>();
+		json.setResult(result).setStatus(HttpStatus.OK.value()).setMessageCode(messageCode);
+		return json;
 	}
 	
-	public static <T> Json<T> res(T result, String msgCd) {
-		return res(result, msgCd, null); 
+	public Json<T> setResult(T result) {
+		this.result = result;
+		return this;
 	}
 	
-	public static <T> Json<T> res(T result, String msgCd, HttpStatus status) {
-		return Json.<T>builder().result(result).status(HttpStatus.OK.value()).msgCd(msgCd).build();
+	public Json<T> setStatus(Integer status) {
+		this.status = status;
+		return this;
+	}
+	
+	public Json<T> setMessageCode(String messageCode) {
+		this.messageCode = messageCode;
+		return this;
 	}
 }

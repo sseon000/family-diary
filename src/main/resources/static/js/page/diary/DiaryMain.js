@@ -1,18 +1,21 @@
+/*
+######################################################################
+# Filename : DiaryMain.js
+# Description : 다이어리 메인
+# author : KSH
+# since : 2024.06.05
+######################################################################
+*/
 define([], function() {
-    // 여기에서 모듈 코드 작성
     $(document).ready(function(){
-        console.log('234');
-        
         $("#searchBtn").click(function(){
 			//Search btn click
 			let param = {
 				"diaryTitle": $('#diaryTitle').val(),
 				"diaryContent": $('#diaryContent').val()
 			}
-			
-			debugger
 			//let param = $("#searchForm").serialize();
-			//param = { diaryDto: param };
+			
 			$.ajax({
 				type:"put",
 				url:"/diary",

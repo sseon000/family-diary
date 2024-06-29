@@ -5,7 +5,7 @@
 <mapper namespace="diaryDao">
 
 	<!-- 다이어리 등록 -->
-	<insert id="idartInsert" parameterType="DiaryDto">
+	<insert id="dairyInsert" parameterType="DiaryDto">
 		insert into DIARY ( /* [insertDiary][다이어리 등록][KSH][2024.06.25] */
 			DIARY_ID      /* ID */
 		  , DIARY_TITLE   /* 다이어리 제목 */
@@ -16,8 +16,8 @@
 			DIARY_SEQ.NEXTVAL
 		  , #{diaryTitle}
 		  , #{diaryContent}
-		  , #{userId}
-		  , #{userId}
+		  , 'sseon001'
+		  , 'sseon001'
 		)
 	</insert>
 	

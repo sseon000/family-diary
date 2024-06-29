@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dto.DiaryDto;
 import com.fsje.dairy.service.DiaryService;
 
@@ -61,7 +62,7 @@ public class DiaryController {
 	 * @return : {sting} page/diary/diarySave
 	 */
 	@GetMapping(value = "/reg")
-	public String pageDiaryForm(DiaryDto diaryDto) {
+	public String pageDiaryForm() {
 		log.info("### DiaryController.pageDiaryForm, {}", "pageDiaryForm");
 		
 		return "page/diary/DiaryForm";
@@ -91,15 +92,15 @@ public class DiaryController {
 	 * @method : diarySave
 	 * @author : KSH
 	 * @since  : 2024.06.25
-	 * @param  : {}
-	 * @return : {sting} 
+	 * @param  : {object} DiaryDto
+	 * @return : {object} Json<DiaryDto> 
 	 */
 	@PutMapping(value = "/reg")
 	@ResponseBody
-	public String diarySave(@RequestBody DiaryDto diaryDto) {
+	public Json<DiaryDto> diarySave(@RequestBody DiaryDto diaryDto) {
 		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
-		//int rowCnt = diaryService.saveDiary(diaryDto);
+		int rowCnt = diaryService.diarySave(diaryDto);
 		
-		return "성공";
+		return Json.createSuccessJson(diaryDto, "code123");
 	}
 }
