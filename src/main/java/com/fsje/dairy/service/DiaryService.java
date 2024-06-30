@@ -29,7 +29,7 @@ public class DiaryService {
 	 * @return : {list} List<DiaryDto>
 	 */
 	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
-		return diaryDao.diarySelect(diaryDto);
+		return diaryDao.diaryList(diaryDto);
 	}
 	
 	/**
@@ -41,5 +41,16 @@ public class DiaryService {
 	 */
 	public int diarySave(DiaryDto diaryDto) {
 		return diaryDao.dairyInsert(diaryDto);
+	}
+
+	/**
+	 * @method : diaryDetail
+	 * @author : KSH
+	 * @since  : 2024.06.30
+	 * @param  : {long} diaryId
+	 * @return : {objec} DiaryDto 
+	 */
+	public DiaryDto diaryDetail(String diaryId) {
+		return diaryDao.diaryDetail(diaryId);
 	}
 }

@@ -21,9 +21,9 @@
 		)
 	</insert>
 	
-	<!-- 다이어리 조회 -->
+	<!-- 다이어리 목록 조회 -->
 	<select id="diarySelect" parameterType="DiaryDto" resultType="DiaryDto">
-		select /* [selectDiaryList][다이어리 조회][KSH][2024.06.09] */
+		select /* [selectDiaryList][다이어리 목록 조회][KSH][2024.06.09] */
 			DIARY_ID       /* ID */
 		  , DIARY_TITLE    /* 다이어리 제목 */
 		  , DIARY_CONTENT  /* 다이어리 내용 */
@@ -38,6 +38,23 @@
 		</if>
 		<if test="diaryTitle != null and diaryTitle != ''">
 			and DIARY_TITLE = #{diaryTitle}
+		</if>
+	</select>
+	
+	<!-- 다이어리 조회 -->
+	<select id="diarySelectOne" parameterType="map" resultType="DiaryDto">
+		select /* [selectDiaryList][다이어리 조회][KSH][2024.06.30] */
+			DIARY_ID       /* ID */
+		  , DIARY_TITLE    /* 다이어리 제목 */
+		  , DIARY_CONTENT  /* 다이어리 내용 */
+		  , REG_USER       /* 등록자 */
+		  , MODI_USER      /* 수정자 */
+		from 
+			DIARY
+		where 
+			1=1
+		<if test="diaryId != null and diaryId != ''">
+			and DIARY_ID = #{diaryId}
 		</if>
 	</select>
 	

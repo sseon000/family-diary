@@ -3,10 +3,12 @@ package com.fsje.dairy.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fsje.dairy.common.model.Json;
@@ -47,7 +49,7 @@ public class DiaryController {
 	 * @return : {sting} page/diary/diaryMain
 	 */
 	@GetMapping("")
-	public String pageDiaryList(DiaryDto diaryDto) {
+	public String pageDiaryList() {
 		log.info("### DiaryController.pageDiaryList, {}", "pageDiaryList");
 		return "page/diary/DiaryMain";
 	}
@@ -55,7 +57,7 @@ public class DiaryController {
 	/**
 	 * 다이어리 등록 화면
 	 * 
-	 * @method : pageDiarySave
+	 * @method : pageDiaryForm
 	 * @author : KSH
 	 * @since  : 2024.06.25
 	 * @param  : {}
@@ -64,6 +66,24 @@ public class DiaryController {
 	@GetMapping(value = "/reg")
 	public String pageDiaryForm() {
 		log.info("### DiaryController.pageDiaryForm, {}", "pageDiaryForm");
+		
+		return "page/diary/DiaryForm";
+	}
+	
+	/**
+	 * 다이어리 수정 화면
+	 * 
+	 * @method : pageDiaryDetailForm
+	 * @author : KSH
+	 * @since  : 2024.06.30
+	 * @param  : {string} diaryId
+	 * @return : {sting} page/diary/diarySave
+	 */
+	@GetMapping(value = "/detail")
+	public String pageDiaryDetailForm(@RequestParam("diaryId") String diaryId, Model m) {
+		log.info("### DiaryController.pageDiaryDetailForm, {}", "pageDiaryDetailForm");
+		DiaryDto detailDiaryDto = diaryService.diaryDetail(diaryId);
+		m.addAttribute("diaryDto", detailDiaryDto);
 		
 		return "page/diary/DiaryForm";
 	}

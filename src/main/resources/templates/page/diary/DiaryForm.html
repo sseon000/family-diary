@@ -14,7 +14,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container">
-			<h1>회원가입</h1>
+			<h1>다이어리 쓰기</h1>
 			<form id="diaryRegForm">
 				<div class="mb-3">
 					<label for="diaryTitle" class="form-label">제목</label>
@@ -27,6 +27,9 @@
 			</form>
 			<button type="submit" class="btn btn-primary" id="regBtn" name="regBtn">등록하기</button>
 		</div>
+		<script th:inline="javascript">
+			let diaryDto = [[${diaryDto}]];
+		</script>
 		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/diary/DiaryForm"></script>
 	</div>
 </body>

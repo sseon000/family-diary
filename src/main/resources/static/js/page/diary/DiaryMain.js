@@ -8,7 +8,7 @@
 */
 define([], function() {
     $(document).ready(function(){
-        $("#searchBtn").click(function(){
+        $("#searchBtn").click(function() {
 			//Search btn click
 			let param = {
 				"diaryTitle": $('#diaryTitle').val(),
@@ -31,11 +31,18 @@ define([], function() {
 					for(let i=0; i<diaryList.length; i++) {
 						diaryDto = diaryList[i];
 						tr = document.createElement('tr');
-						tr.setAttribute("id", i + "_diaryDto");
+						tr.setAttribute("id","diaryDto_" + i);
 						
 						for(const [key, value] of Object.entries(diaryDto)) {
 							td = document.createElement('td');
-							td.setAttribute("id", i + "_key");
+							td.setAttribute("id", key);
+							if(key == 'diaryId') {
+								td.classList.add('link-cell');
+								td.addEventListener('click', function(e) {
+									console.log(e.currentTarget.innerText)
+									location.href = "/diary/detail?diaryId=" + decodeURIComponent(e.currentTarget.innerText);   
+								})
+							}
 							td.innerText = value;
 							tr.appendChild(td);
 						} 
@@ -45,9 +52,5 @@ define([], function() {
 				}
 			});	
 		});		
-        
-        
     });
-
-   
 });

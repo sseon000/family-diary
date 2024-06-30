@@ -1,10 +1,11 @@
 package com.fsje.dairy.dao;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.fsje.dairy.controller.DiaryController;
 import com.fsje.dairy.dto.DiaryDto;
 
 import lombok.AllArgsConstructor;
@@ -34,13 +35,26 @@ public class DiaryDao {
 	}
 	
 	/**
-	 * @method : diarySelect
+	 * @method : diaryList
 	 * @author : KSH
 	 * @since  : 2024.06.09
 	 * @param  : {obejct} DiaryDto
 	 * @return : {list} List<DiaryDto>
 	 */
-	public List<DiaryDto> diarySelect(DiaryDto diaryDto) {
+	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
 		return sqlSessionTemplate.selectList("diaryDao.diarySelect", diaryDto);
+	}
+
+	/**
+	 * @method : diarydetail
+	 * @author : KSH
+	 * @since  : 2024.06.30
+	 * @param  : {long} diaryId
+	 * @return : {object} DiaryDto
+	 */
+	public DiaryDto diaryDetail(String diaryId) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("diaryId", diaryId);
+		return sqlSessionTemplate.selectOne("diaryDao.diarySelectOne", map);
 	}
 }

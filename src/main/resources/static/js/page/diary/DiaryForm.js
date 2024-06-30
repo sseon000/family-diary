@@ -8,6 +8,12 @@
 */
 define([], function() {
     $(document).ready(function(){
+		if(diaryDto.diaryId != 0) {
+			alert('diaryDto' + JSON.stringify(diaryDto));
+			$('#diaryTitle').val(diaryDto.diaryTitle);
+			$('#diaryContent').val(diaryDto.diaryContent);
+		}
+		
         $("#regBtn").click(function(){
 			let param = {
 				"diaryTitle": $('#diaryTitle').val(),
