@@ -24,17 +24,8 @@ public class DiaryDao {
 	private final SqlSessionTemplate sqlSessionTemplate;
 	
 	/**
-	 * @method : diaryInsert
-	 * @author : KSH
-	 * @since  : 2024.06.25
-	 * @param  : {obejct} DiaryDto
-	 * @return : {Integer} int
-	 */
-	public int dairyInsert(DiaryDto diaryDto) {
-		return sqlSessionTemplate.insert("diaryDao.dairyInsert", diaryDto);
-	}
-	
-	/**
+	 * 다이어리 목록 조회
+	 * 
 	 * @method : diaryList
 	 * @author : KSH
 	 * @since  : 2024.06.09
@@ -44,8 +35,23 @@ public class DiaryDao {
 	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
 		return sqlSessionTemplate.selectList("diaryDao.diarySelect", diaryDto);
 	}
+	
+	/**
+	 * 다이어리 등록
+	 * 
+	 * @method : diaryInsert
+	 * @author : KSH
+	 * @since  : 2024.06.25
+	 * @param  : {obejct} DiaryDto
+	 * @return : {Integer} int
+	 */
+	public int dairyInsert(DiaryDto diaryDto) {
+		return sqlSessionTemplate.insert("diaryDao.dairyInsert", diaryDto);
+	}
 
 	/**
+	 * 다이어리 상세 조회
+	 * 
 	 * @method : diarydetail
 	 * @author : KSH
 	 * @since  : 2024.06.30
@@ -56,5 +62,18 @@ public class DiaryDao {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("diaryId", diaryId);
 		return sqlSessionTemplate.selectOne("diaryDao.diarySelectOne", map);
+	}
+	
+	/**
+	 * 다이어리 수정
+	 * 
+	 * @method : diaryModify
+	 * @author : KSH
+	 * @since  : 2024.07.01
+	 * @param  : {obejct} DiaryDto
+	 * @return : {int} 
+	 */
+	public int diaryModify(DiaryDto diaryDto) {
+		return sqlSessionTemplate.update("diaryDao.dairyUpdate", diaryDto);
 	}
 }

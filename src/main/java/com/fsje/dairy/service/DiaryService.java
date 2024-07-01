@@ -22,6 +22,8 @@ public class DiaryService {
 	private final DiaryDao diaryDao;
 	
 	/**
+	 * 다이어리 목록 조회
+	 * 
 	 * @method : diaryList
 	 * @author : KSH
 	 * @since  : 2024.06.09
@@ -33,6 +35,8 @@ public class DiaryService {
 	}
 	
 	/**
+	 * 다이어리 등록
+	 * 
 	 * @method : diarySave
 	 * @author : KSH
 	 * @since  : 2024.06.29
@@ -44,6 +48,8 @@ public class DiaryService {
 	}
 
 	/**
+	 * 다이어리 상세
+	 * 
 	 * @method : diaryDetail
 	 * @author : KSH
 	 * @since  : 2024.06.30
@@ -52,5 +58,18 @@ public class DiaryService {
 	 */
 	public DiaryDto diaryDetail(String diaryId) {
 		return diaryDao.diaryDetail(diaryId);
+	}
+	
+	/**
+	 * 다이어리 수정
+	 * 
+	 * @method : diaryModify
+	 * @author : KSH
+	 * @since  : 2024.07.01
+	 * @param  : {obejct} DiaryDto
+	 * @return : {int}  
+	 */
+	public int diaryModify(DiaryDto diaryDto) {
+		return diaryDao.diaryModify(diaryDto);
 	}
 }

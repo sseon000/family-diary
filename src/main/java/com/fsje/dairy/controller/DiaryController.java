@@ -123,4 +123,22 @@ public class DiaryController {
 		
 		return Json.createSuccessJson(diaryDto, "code123");
 	}
+	
+	/**
+	 * 다이어리 수정
+	 * 
+	 * @method : diaryModify
+	 * @author : KSH
+	 * @since  : 2024.07.01
+	 * @param  : {object} DiaryDto
+	 * @return : {object} Json<DiaryDto> 
+	 */
+	@PutMapping(value = "/modify")
+	@ResponseBody
+	public Json<DiaryDto> diaryModify(@RequestBody DiaryDto diaryDto) {
+		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
+		int rowCnt = diaryService.diaryModify(diaryDto);
+		
+		return Json.createSuccessJson(diaryDto, "code123");
+	}
 }
