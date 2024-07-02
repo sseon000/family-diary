@@ -14,8 +14,8 @@ public class DiaryDto {
 	private long diaryId;
 	private String diaryTitle;
 	private String diaryContent;
-	private String regUserId;
+	private String regUser;
 	private String regAt;
-	private String modiUserId;
+	private String modiUser;
 	private String modiAt;
 }

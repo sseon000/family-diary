@@ -8,9 +8,16 @@
 */
 define([], function() {
     $(document).ready(function(){
+		let isEdit = false;
+		let url = "/diary/reg";
 		
-		if(diaryDto.diaryId != 0) { // 수정폼
-			alert('diaryDto' + JSON.stringify(diaryDto));
+		if((Object.keys(diaryDto)).length != 0) { // 수정
+			isEdit = true;
+		}
+		
+		if(isEdit) { // 수정폼
+			url = "/diary/modify";
+			$('#diaryId').val(diaryDto.diaryId)
 			$('#diaryTitle').val(diaryDto.diaryTitle);
 			$('#diaryContent').val(diaryDto.diaryContent);
 			$('#regBtn').text('수정');
@@ -18,22 +25,17 @@ define([], function() {
 		} 
 		
         $("#regBtn").click(function(){
-			let url = "";
+			
 			let param = {
+				"diaryId": $('#diaryId').val(),
 				"diaryTitle": $('#diaryTitle').val(),
 				"diaryContent": $('#diaryContent').val()
 			}
 			//let param =  $("#diaryRegForm").serialize();
 			
-			if(false) {
-				url = "/diary/reg";
-			} else {
-				url = "/diary/modify";
-			}
-			
 			$.ajax({
 					type:"put",
-					url:"/diary/reg",
+					url: url,
 					dataType: "json",
 					contentType: "application/json",
 					data:JSON.stringify(param),

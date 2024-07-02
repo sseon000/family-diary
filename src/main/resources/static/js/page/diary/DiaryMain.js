@@ -23,8 +23,11 @@ define([], function() {
 				contentType: "application/json",
 				data:JSON.stringify(param),
 				success:function(diaryList){
-					console.log(diaryList);
-					console.log(typeof diaryList);
+					let tbody = document.getElementById('diaryTbody');
+					while(tbody.childElementCount > 0) {
+						tbody.removeChild(tbody.firstChild);
+					}
+					//console.log(diaryList);
 					let tr;
 					let td;
 					let diaryDto;
@@ -34,23 +37,29 @@ define([], function() {
 						tr.setAttribute("id","diaryDto_" + i);
 						
 						for(const [key, value] of Object.entries(diaryDto)) {
-							td = document.createElement('td');
-							td.setAttribute("id", key);
-							if(key == 'diaryId') {
-								td.classList.add('link-cell');
-								td.addEventListener('click', function(e) {
-									console.log(e.currentTarget.innerText)
-									location.href = "/diary/detail?diaryId=" + decodeURIComponent(e.currentTarget.innerText);   
-								})
+							console.log(`key: ${key}, value: ${value}`);
+							if(value != null) {
+								td = document.createElement('td');
+								td.setAttribute("id", key);
+								if(key == 'diaryId') {
+									td.classList.add('link-cell');
+									td.addEventListener('click', function(e) {
+										console.log(e.currentTarget.innerText)
+										location.href = "/diary/detail?diaryId=" + decodeURIComponent(e.currentTarget.innerText);   
+									})
+								}
+								td.innerText = value;
+								tr.appendChild(td);	
 							}
-							td.innerText = value;
-							tr.appendChild(td);
+							
 						} 
 										
 						$('#diaryTable > tbody')[0].appendChild(tr);	
 					}	
 				}
 			});	
-		});		
+		});
+		
+		$('#searchBtn').click();	
     });
 });
