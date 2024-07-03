@@ -5,10 +5,26 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
  <head>
 	<meta charset="UTF-8">
     <title>Family Diary</title>
+	
+	<!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+	
+	<!-- Bootstrap -->
 	<!-- @는 주소를 의미, url에 변수 사용시 || 추가 -->
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+	
+	<!-- Custom -->
 	<link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <!-- Google Web Fonts -->
+
+    <!-- Icon Font Stylesheet -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap-icons-1.11.3/bootstrap-icons.css}">
+	
+	<!-- JS Bootstrap -->	
 	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+	
+	<!-- JS Jquery -->
 	<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
 </head>
 <body>

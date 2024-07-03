@@ -1,13 +1,24 @@
+:root {
+    --primary: #B78D65;
+    --light: #F8F8F8;
+    --dark: #252525;
+}
+
 * {
 	margin: 0 auto;
 	box-sizing: border-box;
 }
 
-.link-cell {
-	text-decoration: underline;
-	color: cornflowerblue;
+img.bi {
+	width: 36px;
+	height: 36px;
 }
 
-.link-cell:hover{
-	cursor: pointer;
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    z-index: 99;
 }
+
