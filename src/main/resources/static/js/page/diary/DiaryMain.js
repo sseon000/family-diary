@@ -8,6 +8,7 @@
 */
 define([], function() {
     $(document).ready(function(){
+		
         $("#searchBtn").click(function() {
 			//Search btn click
 			let param = {
@@ -37,7 +38,7 @@ define([], function() {
 						tr.setAttribute("id","diaryDto_" + i);
 						
 						for(const [key, value] of Object.entries(diaryDto)) {
-							console.log(`key: ${key}, value: ${value}`);
+							//console.log(`key: ${key}, value: ${value}`);
 							if(value != null) {
 								td = document.createElement('td');
 								td.setAttribute("id", key);

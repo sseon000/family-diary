@@ -14,7 +14,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container">
-			<h1>다이어리 쓰기</h1>
+			<h1>다이어리 작성</h1>
 			<form id="diaryRegForm">
 				<div class="mb-3">
 					<input type="hidden" class="form-control" id="diaryId" name="diaryId">
@@ -33,7 +33,7 @@
 			<button type="button" class="btn btn-primary visible" id="deleteBtn" name="deleteBtn">삭제</button>
 		</div>
 		<script th:inline="javascript">
-			let diaryDto = [[${diaryDto}]];
+			let diaryDto = [[${diaryDto}]] || {};
 		</script>
 		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/diary/DiaryForm"></script>
 	</div>

@@ -20,6 +20,7 @@ define([], function() {
 			$('#diaryId').val(diaryDto.diaryId)
 			$('#diaryTitle').val(diaryDto.diaryTitle);
 			$('#diaryContent').val(diaryDto.diaryContent);
+			$('.container > h1').text('다이어리 수정');
 			$('#regBtn').text('수정');
 			$('#deleteBtn').addClass('invisible');
 		} 

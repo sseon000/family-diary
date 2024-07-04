@@ -12,44 +12,37 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layout/layout}">
 <body>
-	<div layout:fragment="content">
-		<div class="col-sm-12">		
-			<h1>main</h1>
-			<form id="searchForm">
-				<fieldset>
-					<legend>diary 목록</legend>
-					<dl>
-						<dt>
-							<label th:for="diaryTitle">제목 : </label>
-						</dt>
-						<dd>
-					    	<input type="text" id="diaryTitle" name="diaryTitle" />
-						</dd>
-						<dt>
-							<label th:for="diaryContent">내용 : </labe>
-						</dt>
-						<dd>
-					    	<input type="text" id="diaryContent" name="diaryContent" />
-						</dd>
-						<dd>
-							<input type="button" id="searchBtn" value="조회"/>				
-						</dd>
-					</dl>
-				</fieldset>
+	<div layout:fragment="content" class="container">
+			<h1>다이어리 목록</h1>
+			<form class="row justify-content-between align-items-center" id="searchForm">
+				<div class="col-6 row">
+					<div class="col-5 .col-sm-1 mb-1">
+						<label th:for="diaryTitle">제목 : </label>
+						<input type="text" id="diaryTitle" name="diaryTitle" />
+					</div>
+					<div class="col-5 .col-sm-1 mb-1">
+						<label th:for="diaryContent">내용 : </labe>
+						<input type="text" id="diaryContent" name="diaryContent" />
+					</div>
+				</div>
+				<div class="col-2 row justify-content-end">
+					<div class="col-5야 .col-sm-1 mb-1">
+						<input type="button" class="btn btn-primary" id="searchBtn" name="searchBtn" value="조회"/>				
+					</div>
+				</div>
 			</form>
-			<table id="diaryTable" class="table table-stripted table-bordered table-condensed">
-				<thead>
-					<tr>
-						<th>Id</th>
-					    <th>Title</th>
-					    <th>Content</th>
-					    <th>ModiUser</th>
-					    <th>ModiAt</th>
-					 </tr>
-				</thead>
-				<tbody id="diaryTbody"></tbody>
-			</table>
-		</div>
+		<table id="diaryTable" class="table table-stripted table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Id</th>
+				    <th>Title</th>
+				    <th>Content</th>
+				    <th>ModiUser</th>
+				    <th>ModiAt</th>
+				 </tr>
+			</thead>
+			<tbody id="diaryTbody"></tbody>
+		</table>
 		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/diary/DiaryMain"></script>
 	</div>
 </body>
