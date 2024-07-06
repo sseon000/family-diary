@@ -1,0 +1,51 @@
+<!-- 
+######################################################################
+# Filename : DiaryMain.html
+# Description : 다이어리 메인 화면
+# author : KSH
+# since : 2024.06.05
+######################################################################
+-->
+<!DOCTYPE html>
+<html lang="ko" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content" class="container">
+		<h1>파일 목록</h1>
+		<input name="uploadFiles" type="file" multiple>
+		    <button class="uploadBtn">Upload</button>
+		    <script>
+		        $('.uploadBtn').click(function() {
+		            var formData = new FormData();
+
+		            var inputFile = $("input[type='file']");
+
+		            var files = inputFile[0].files;
+
+		            for(var i = 0; i < files.length; i++) {
+		                console.log(files[i]);
+		                formData.append("uploadFiles", files[i]);
+		            }
+					
+				$.ajax({
+		               url: '/diary/uploadFile',
+		               processData: false,
+		               contentType: false,
+		               data: formData,
+		               type: 'put',
+		               dataType: 'json',
+		               success: function(result) {
+		                   console.log(result);
+		               },
+		               error: function(jqXHR, textStatus, errorThrown) {
+		                   console.log(textStatus);
+		               }
+		           });
+		        });
+		    </script>
+		<!-- <script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/diary/DiaryMain"></script> -->
+	</div>
+</body>
+</html>

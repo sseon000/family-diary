@@ -1,7 +1,17 @@
 package com.fsje.dairy.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dto.DiaryDto;
+import com.fsje.dairy.dto.FileDto;
 import com.fsje.dairy.service.DiaryService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,9 +38,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Controller
 @RequiredArgsConstructor //초기화 되지 않은 final필드와 @NonNull 어노테이션이 붙은 필드에 대한 생성자 생성
+@PropertySource("application.properties") //값을 사용할 properties file 지정 
 @Slf4j
 @RequestMapping("/diary")
 public class DiaryController {
+	@Value("${uploadPath}") //${}을 키로 값을 읽어옴
+    private String uploadPath;
+	
 	/**
 	 * 의존성 주입(DI) : 생성자, setter, 필드 
 	 * 생성자 주입 권장
@@ -141,4 +157,74 @@ public class DiaryController {
 		
 		return Json.createSuccessJson(diaryDto, "code123");
 	}
+	
+	/**
+	 * 다이어리 화면
+	 * 
+	 * @method : pageDiaryList
+	 * @author : KSH
+	 * @since  : 2024.06.02
+	 * @param  : {} 
+	 * @return : {sting} page/diary/diaryMain
+	 */
+	@GetMapping(value = "/diaryFile")
+	public String pageDiaryFileList() {
+		log.info("### DiaryController.pageDiaryList, {}", "pageDiaryList");
+		return "page/diary/DiaryFile";
+	}
+	
+    @PutMapping(value = "/uploadFile")
+    @ResponseBody
+    public Json<List<FileDto>> uploadFile(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+    	
+    	List<FileDto> fileList = new ArrayList<>();
+        for(MultipartFile uploadFile : uploadFiles) {
+
+            //파일 확장자 체크
+            if(uploadFile.getContentType().startsWith("image") == false) {
+                log.warn("this is not image type");
+                return null;
+            }
+
+            String originalName = uploadFile.getOriginalFilename();
+            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+
+            log.info("fileName " +fileName);
+
+            //폴더 구분
+            String folderPath = makeFolder();
+            String uuid = UUID.randomUUID().toString();
+
+            //파일명 구분
+            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+            Path savePath = Paths.get(saveName);
+            try {
+                uploadFile.transferTo(savePath);
+                FileDto fileDto = new FileDto(new Integer(123), new Integer(123), fileName, folderPath, "", "", "", "");
+                fileList.add(fileDto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return Json.createSuccessJson(fileList,"uploadSuccess"); 
+    }
+
+    /**
+     * @todo util 패키지로 옮기기
+     * 
+     */
+    private String makeFolder(){
+        String folderPath = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        //String folderPath = str.replace("//", File.separator);
+
+        File uploadPathFolder = new File(uploadPath, folderPath);
+
+        if(uploadPathFolder.exists() == false) {
+            uploadPathFolder.mkdirs();
+        }
+
+        return folderPath;
+    }
 }

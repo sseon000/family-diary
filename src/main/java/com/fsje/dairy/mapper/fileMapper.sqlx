@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fileDao">
+
+	<!-- 파일 등록 -->
+	<insert id="dairyFileInsert" parameterType="FileDto">
+		insert into DIARY ( /* [dairyFileInsert][파일 등록][KSH][2024.07.06] */
+			DIARY_FILE_ID /* 파일ID *
+		  , DIARY_ID      /* ID */
+		  , DIARY_TITLE   /* 다이어리 제목 */
+		  , DIARY_CONTENT /* 다이어리 내용 */
+		  , REG_USER      /* 등록자 */
+		  , MODI_USER )   /* 수정자 */
+		values (
+			DIARY_FILE_SEQ.NEXTVAL
+		  , #{diaryId}
+		  , #{diaryTitle}
+		  , #{diaryContent}
+		  , 'sseon001'
+		  , 'sseon001'
+		)
+	</insert>
+	
+	<!-- 파일 상세 조회 -->
+	<select id="diaryFileSelectOne" parameterType="map" resultType="FileDto">
+		select /* [diaryFileSelectOne][파일 상세 조회][KSH][2024.07.06] */
+			DIARY_FILE_ID  /* 파일ID */
+		  , DIARY_ID       /* ID */
+		  , FILE_TITLE     /* 파일 제목 */
+		  , FILE_CONTENT   /* 파일 내용 */
+		  , MODI_USER      /* 수정자 */
+		  , MODI_AT        /* 수정시간 */
+		from 
+			DIARY_FILE a 
+		inner join 
+			DIARY      b on a.DIARY_ID = b.DIARY_ID 
+		where 
+			1=1
+			and a.DIARY_ID = #{diaryId}
+	</select>
+	
+	<!-- 파일 수정 -->
+	<update id="dairyFileUpdate" parameterType="FileDto">
+		update DIARY /* [dairyFileUpdate][파일 수정][KSH][2024.07.06] */
+		<set>
+		<if test="diaryTitle != null and diaryTitle != ''">
+            DIARY_TITLE = #{diaryTitle}
+        </if>
+        <if test="diaryContent != null and diaryContent != ''">
+          , DIARY_CONTENT = #{diaryContent}
+        </if>
+          , MODI_USER = 'sseon001'
+          , MODI_AT = to_char(sysdate, 'YYYYMMDDHH24MISS'),
+		</set>
+		where
+			1=1
+			and DIARY_ID = #{diaryId}
+	</update>
+	
+</mapper>

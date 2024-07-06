@@ -14,5 +14,6 @@
 	
 	<typeAliases>
   		<typeAlias alias="DiaryDto" type="com.fsje.dairy.dto.DiaryDto"/>
+  		<typeAlias alias="FileDto" type="com.fsje.dairy.dto.FileDto"/>
 	</typeAliases>
 </configuration>
