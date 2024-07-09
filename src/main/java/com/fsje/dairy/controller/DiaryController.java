@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -181,13 +182,16 @@ public class DiaryController {
         for(MultipartFile uploadFile : uploadFiles) {
 
             //파일 확장자 체크
+        	//String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
             if(uploadFile.getContentType().startsWith("image") == false) {
                 log.warn("this is not image type");
                 return null;
             }
+            
 
             String originalName = uploadFile.getOriginalFilename();
             String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+            String extension = StringUtils.getFilenameExtension(originalName);
 
             log.info("fileName " +fileName);
 
@@ -196,11 +200,13 @@ public class DiaryController {
             String uuid = UUID.randomUUID().toString();
 
             //파일명 구분
-            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+            //String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+            String newFileName = uuid + "." + extension;
+            String saveName = uploadPath + File.separator + folderPath + File.separator + newFileName;
             Path savePath = Paths.get(saveName);
             try {
                 uploadFile.transferTo(savePath);
-                FileDto fileDto = new FileDto(new Integer(123), new Integer(123), fileName, folderPath, "", "", "", "");
+                FileDto fileDto = new FileDto(new Integer(123), new Integer(123), newFileName, folderPath, "", "", "", "");
                 fileList.add(fileDto);
             } catch (IOException e) {
                 e.printStackTrace();

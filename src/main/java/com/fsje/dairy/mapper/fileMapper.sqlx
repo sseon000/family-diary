@@ -9,15 +9,17 @@
 		insert into DIARY ( /* [dairyFileInsert][파일 등록][KSH][2024.07.06] */
 			DIARY_FILE_ID /* 파일ID *
 		  , DIARY_ID      /* ID */
-		  , DIARY_TITLE   /* 다이어리 제목 */
-		  , DIARY_CONTENT /* 다이어리 내용 */
+		  , FILE_NAME     /* 파일명 */
+		  , FILE_PATH     /* 파일경로 */
+		  , IS_THUMB       /* 썸네일여부 */
 		  , REG_USER      /* 등록자 */
 		  , MODI_USER )   /* 수정자 */
 		values (
 			DIARY_FILE_SEQ.NEXTVAL
 		  , #{diaryId}
-		  , #{diaryTitle}
-		  , #{diaryContent}
+		  , #{fileName}
+		  , #{filePath}
+		  , #{isThumb}
 		  , 'sseon001'
 		  , 'sseon001'
 		)
@@ -28,8 +30,9 @@
 		select /* [diaryFileSelectOne][파일 상세 조회][KSH][2024.07.06] */
 			DIARY_FILE_ID  /* 파일ID */
 		  , DIARY_ID       /* ID */
-		  , FILE_TITLE     /* 파일 제목 */
-		  , FILE_CONTENT   /* 파일 내용 */
+		  , FILE_NAME      /* 파일명 */
+		  , FILE_PATH      /* 파일경로 */
+		  , IS_THUMB       /* 썸네일여부 */
 		  , MODI_USER      /* 수정자 */
 		  , MODI_AT        /* 수정시간 */
 		from 
@@ -41,22 +44,7 @@
 			and a.DIARY_ID = #{diaryId}
 	</select>
 	
-	<!-- 파일 수정 -->
-	<update id="dairyFileUpdate" parameterType="FileDto">
-		update DIARY /* [dairyFileUpdate][파일 수정][KSH][2024.07.06] */
-		<set>
-		<if test="diaryTitle != null and diaryTitle != ''">
-            DIARY_TITLE = #{diaryTitle}
-        </if>
-        <if test="diaryContent != null and diaryContent != ''">
-          , DIARY_CONTENT = #{diaryContent}
-        </if>
-          , MODI_USER = 'sseon001'
-          , MODI_AT = to_char(sysdate, 'YYYYMMDDHH24MISS'),
-		</set>
-		where
-			1=1
-			and DIARY_ID = #{diaryId}
-	</update>
+	<!-- 파일 삭제 -->
+
 	
 </mapper>

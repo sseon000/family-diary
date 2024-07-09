@@ -17,6 +17,7 @@ public class FileDto {
 	private Integer diaryId;
 	private String fileName;
 	private String filePath;
+	private String isThumb;
 	private String regUser;
 	private String regAt;
 	private String modiUser;
