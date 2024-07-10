@@ -1,23 +1,20 @@
 package com.fsje.dairy.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * @file   : FileDto
+ * @file   : DiaryResDto
  * @author : KSH
- * @brief  : 파일 DTO
+ * @brief  : 다이어리 RES DTO
  * @see    : N/A
- * @since  : 2024.07.06
+ * @since  : 2024.07.10
  */
 @Data
-@NoArgsConstructor
-public class FileDto {
-	private Integer diaryFileId;
+public class DiaryResDto {
 	private Integer diaryId;
-	private String fileName;
+	private String diaryTitle;
+	private String diaryContent;
 	private String filePath;
-	private String isThumb;
 	private String regUser;
 	private String regAt;
 	private String modiUser;

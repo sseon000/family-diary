@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dao.DiaryDao;
 import com.fsje.dairy.dto.DiaryDto;
+import com.fsje.dairy.dto.DiaryResDto;
 
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,19 @@ public class DiaryService {
 	 */
 	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
 		return diaryDao.diaryList(diaryDto);
+	}
+	
+	/**
+	 * 다이어리 목록 조회 테스트
+	 * 
+	 * @method : diaryListTest
+	 * @author : KSH
+	 * @since  : 2024.07.10
+	 * @param  : {obejct} DiaryDto
+	 * @return : {list} List<DiaryDto>
+	 */
+	public List<DiaryResDto> diaryListTest(DiaryDto diaryDto) {
+		return diaryDao.diaryListTest(diaryDto);
 	}
 	
 	/**

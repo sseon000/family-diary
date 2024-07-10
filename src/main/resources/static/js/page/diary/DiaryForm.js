@@ -22,28 +22,58 @@ define([], function() {
 			$('#diaryContent').val(diaryDto.diaryContent);
 			$('.container > h1').text('다이어리 수정');
 			$('#regBtn').text('수정');
-			$('#deleteBtn').addClass('invisible');
+			$('#deleteBtn').addClass('visible');
 		} 
 		
+		$('#diaryFiles').change(function(e) {
+		  	console.log(e);
+		  
+		  	let fileList = e.target.files;
+			let previewTag = $('#preview');
+		  
+		  	for(let i=0; i<fileList.length; i++) {
+				console.log(fileList[i]);
+				let imgTag = document.createElement('img');
+				imgTag.style.width = '400px';
+				imgTag.style.height = '400px';
+				let imgUrl = URL.createObjectURL(fileList[i]);
+				imgTag.setAttribute('src', imgUrl);
+				previewTag.append(imgTag);
+		  	}
+		});
+		
         $("#regBtn").click(function(){
+			let formData = new FormData();
+			let files = $('#diaryFiles')[0].files;
 			
-			let param = {
+			for(let i = 0; i < files.length; i++) {
+                console.log(files[i]);
+                formData.append("diaryFiles", files[i]);
+            };
+			
+			let diaryDto = {
 				"diaryId": $('#diaryId').val(),
 				"diaryTitle": $('#diaryTitle').val(),
 				"diaryContent": $('#diaryContent').val()
 			}
-			//let param =  $("#diaryRegForm").serialize();
+			
+			formData.append("diaryDto", new Blob([JSON.stringify(diaryDto)], { type: 'application/json' }));
 			
 			$.ajax({
-					type:"put",
-					url: url,
-					dataType: "json",
-					contentType: "application/json",
-					data:JSON.stringify(param),
-					success:function(data){
-						console.log(data);
-					}
-				});
+				url: '/diary/uploadFileTest',
+				type : "post",
+				data : formData,  
+				contentType: false,
+				processData: false,
+				enctype: "multipart/form-data",
+				success:function(data){
+					console.log(data);
+					location.href = "/diary";
+				},
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+			});
 			
 		});
 		

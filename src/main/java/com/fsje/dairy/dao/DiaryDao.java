@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fsje.dairy.dto.DiaryDto;
+import com.fsje.dairy.dto.DiaryResDto;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,19 @@ public class DiaryDao {
 	 */
 	public List<DiaryDto> diaryList(DiaryDto diaryDto) {
 		return sqlSessionTemplate.selectList("diaryDao.diarySelect", diaryDto);
+	}
+	
+	/**
+	 * 다이어리 목록 조회
+	 * 
+	 * @method : diaryListTest
+	 * @author : KSH
+	 * @since  : 2024.07.10
+	 * @param  : {obejct} DiaryDto
+	 * @return : {list} List<DiaryResDto>
+	 */
+	public List<DiaryResDto> diaryListTest(DiaryDto diaryDto) {
+		return sqlSessionTemplate.selectList("diaryDao.diarySelectTest", diaryDto);
 	}
 	
 	/**

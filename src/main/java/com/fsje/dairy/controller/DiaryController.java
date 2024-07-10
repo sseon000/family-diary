@@ -16,15 +16,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dto.DiaryDto;
+import com.fsje.dairy.dto.DiaryResDto;
 import com.fsje.dairy.dto.FileDto;
 import com.fsje.dairy.service.DiaryService;
 
@@ -124,6 +127,23 @@ public class DiaryController {
 	}
 	
 	/**
+	 * 다이어리 목록 조회 테스트
+	 * 
+	 * @method : diaryList
+	 * @author : KSH
+	 * @since  : 2024.07.10
+	 * @param  : {obejct} DiaryDto
+	 * @return : {list} List<DiaryDto>
+	 */
+	@PostMapping(value = "")
+	@ResponseBody
+	public List<DiaryResDto> diaryListTest(@RequestBody DiaryDto diaryDto) {
+		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
+		List<DiaryResDto> diaryList = diaryService.diaryListTest(diaryDto);
+		return diaryList;
+	}
+	
+	/**
 	 * 다이어리 등록
 	 * 
 	 * @method : diarySave
@@ -173,7 +193,57 @@ public class DiaryController {
 		log.info("### DiaryController.pageDiaryList, {}", "pageDiaryList");
 		return "page/diary/DiaryFile";
 	}
-	
+    
+    @PostMapping(value = "/uploadFileTest")
+    @ResponseBody
+    public Json<List<FileDto>> uploadFileTest(@RequestPart("diaryFiles") MultipartFile[] diaryFiles
+    										, @RequestPart("diaryDto") DiaryDto diaryDto) {
+    	
+    	log.info("### DiaryController.uploadFileTest.diaryDto, {}", diaryDto.toString());
+    	List<FileDto> fileList = new ArrayList<>();
+    	
+        for(MultipartFile uploadFile : diaryFiles) {
+            //파일 확장자 체크
+        	//String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+            if(uploadFile.getContentType().startsWith("image") == false) {
+                log.warn("this is not image type");
+                return null;
+            }
+            
+            String originalName = uploadFile.getOriginalFilename();
+            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+            String extension = StringUtils.getFilenameExtension(originalName);
+            
+            log.info("### uploadFileTest.fileName, {}", fileName);
+
+            //폴더 구분
+            String folderPath = makeFolder();
+            String uuid = UUID.randomUUID().toString();
+
+            //파일명 구분
+            //String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+            String newFileName = uuid + "." + extension;
+            String saveName = uploadPath + File.separator + folderPath + File.separator + newFileName;
+            Path savePath = Paths.get(saveName);
+            try {
+                uploadFile.transferTo(savePath);
+                FileDto fileDto = new FileDto();
+                fileDto.setFileName(newFileName);
+                fileDto.setFilePath(saveName);
+                fileDto.setIsThumb("1");
+                fileList.add(fileDto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            for(FileDto file : fileList) {
+            	log.info("### uploadFileTest.file, {}", file.toString());
+            }
+        }
+        
+        return Json.createSuccessJson(fileList,"uploadSuccess"); 
+    }
+    
     @PutMapping(value = "/uploadFile")
     @ResponseBody
     public Json<List<FileDto>> uploadFile(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
@@ -206,7 +276,9 @@ public class DiaryController {
             Path savePath = Paths.get(saveName);
             try {
                 uploadFile.transferTo(savePath);
-                FileDto fileDto = new FileDto(new Integer(123), new Integer(123), newFileName, folderPath, "", "", "", "");
+                FileDto fileDto = new FileDto();
+                fileDto.setFileName(newFileName);
+                fileDto.setFilePath(folderPath);
                 fileList.add(fileDto);
             } catch (IOException e) {
                 e.printStackTrace();

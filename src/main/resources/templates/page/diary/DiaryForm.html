@@ -20,6 +20,13 @@
 					<input type="hidden" class="form-control" id="diaryId" name="diaryId">
 				</div>
 				<div class="mb-3">
+					<label for="diaryFiles" class="form-label">사진</label>
+					<input type="file" multiple class="form-control" id="diaryFiles" name="diaryFiles" rows="3"></input>
+				</div>
+				<div class="mb-3">
+					<div id="preview"></div>
+				</div>
+				<div class="mb-3">
 					<label for="diaryTitle" class="form-label">제목</label>
 					<input type="text" class="form-control" id="diaryTitle" name="diaryTitle">
 				</div>
@@ -30,7 +37,7 @@
 			</form>
 			<button type="button" class="btn btn-primary" id="listBtn" name="listBtn">목록</button>
 			<button type="button" class="btn btn-primary" id="regBtn" name="regBtn">등록</button>
-			<button type="button" class="btn btn-primary visible" id="deleteBtn" name="deleteBtn">삭제</button>
+			<button type="button" class="btn btn-primary invisible" id="deleteBtn" name="deleteBtn">삭제</button>
 		</div>
 		<script th:inline="javascript">
 			let diaryDto = [[${diaryDto}]] || {};
