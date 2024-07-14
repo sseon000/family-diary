@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fsje.dairy.common.model.Json;
 import com.fsje.dairy.dto.DiaryDto;
-import com.fsje.dairy.dto.DiaryResDto;
 import com.fsje.dairy.dto.FileDto;
 import com.fsje.dairy.service.DiaryService;
 
@@ -113,33 +112,15 @@ public class DiaryController {
 	 * 
 	 * @method : diaryList
 	 * @author : KSH
-	 * @since  : 2024.06.09
-	 * @param  : {obejct} DiaryDto
-	 * @return : {list} List<DiaryDto>
-	 */
-	@PutMapping(value = "")
-	@ResponseBody
-	public List<DiaryDto> diaryList(@RequestBody DiaryDto diaryDto) {
-		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
-		List<DiaryDto> diaryList = diaryService.diaryList(diaryDto);
-		
-		return diaryList;
-	}
-	
-	/**
-	 * 다이어리 목록 조회 테스트
-	 * 
-	 * @method : diaryList
-	 * @author : KSH
 	 * @since  : 2024.07.10
 	 * @param  : {obejct} DiaryDto
 	 * @return : {list} List<DiaryDto>
 	 */
 	@PostMapping(value = "")
 	@ResponseBody
-	public List<DiaryResDto> diaryListTest(@RequestBody DiaryDto diaryDto) {
+	public List<DiaryDto> diaryList(@RequestBody DiaryDto diaryDto) {
 		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
-		List<DiaryResDto> diaryList = diaryService.diaryListTest(diaryDto);
+		List<DiaryDto> diaryList = diaryService.diaryList(diaryDto);
 		return diaryList;
 	}
 	

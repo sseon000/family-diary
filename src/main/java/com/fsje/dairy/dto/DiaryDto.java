@@ -20,6 +20,7 @@ public class DiaryDto {
 	private Integer diaryId;
 	private String diaryTitle;
 	private String diaryContent;
+	private String filePath;
 	private String regUser;
 	private String regAt;
 	private String modiUser;
