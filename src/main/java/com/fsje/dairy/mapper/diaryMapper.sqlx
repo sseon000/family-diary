@@ -3,29 +3,35 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="diaryDao">
-
-	<!-- 다이어리 목록 조회 -->
+	
+	<!-- 다이어리 목록 조회-->
 	<select id="diarySelect" parameterType="DiaryDto" resultType="DiaryDto">
-		select /* [diarySelect][다이어리 목록 조회][KSH][2024.06.09] */
-			DIARY_ID       /* ID */
-		  , DIARY_TITLE    /* 다이어리 제목 */
-		  , DIARY_CONTENT  /* 다이어리 내용 */
-		  , MODI_USER      /* 수정자 */
-		  , MODI_AT        /* 수정시간 */
+		select /* [diarySelect][다이어리 목록 조회][KSH][2024.07.10] */
+			A.DIARY_ID       /* ID */
+		  , A.DIARY_TITLE    /* 다이어리 제목 */
+		  , A.DIARY_CONTENT  /* 다이어리 내용 */
+		  , B.FILE_PATH      /* 파일경로 */
+		  , A.MODI_USER      /* 수정자 */
+		  , A.MODI_AT        /* 수정시간 */
 		from 
-			DIARY
-		where 
+			DIARY      A
+		inner join 
+			DIARY_FILE B on A.DIARY_ID = B.DIARY_ID and B.IS_THUMB = '1'
+		where
 			1=1
 		<if test="diaryTitle != null and diaryTitle != ''">
-			and DIARY_TITLE like '%' || #{diaryTitle} || '%'
+			and A.DIARY_TITLE like '%' || #{diaryTitle} || '%'
 		</if>
 		<if test="diaryContent != null and diaryContent != ''">
-			and DIARY_CONTENT like '%' || #{diaryContent} || '%'
+			and A.DIARY_CONTENT like '%' || #{diaryContent} || '%'
 		</if>
 	</select>
 
 	<!-- 다이어리 등록 -->
 	<insert id="dairyInsert" parameterType="DiaryDto">
+		<selectKey keyProperty="diaryId" resultType="Integer" order="BEFORE">
+			select DIARY_SEQ.NEXTVAL from DUAL
+		</selectKey>
 		insert into DIARY ( /* [dairyInsert][다이어리 등록][KSH][2024.06.25] */
 			DIARY_ID      /* ID */
 		  , DIARY_TITLE   /* 다이어리 제목 */
@@ -33,9 +39,30 @@
 		  , REG_USER      /* 등록자 */
 		  , MODI_USER )   /* 수정자 */
 		values (
-			DIARY_SEQ.NEXTVAL
+			#{diaryId}
 		  , #{diaryTitle}
 		  , #{diaryContent}
+		  , 'sseon001'
+		  , 'sseon001'
+		)
+	</insert>
+	
+	<!-- 다이어리 파일 등록 -->
+	<insert id="diaryFileInsert" parameterType="FileDto">
+		insert into DIARY_FILE (/* [insertDiaryFile][파일 등록][KSH][2024.07.10] */
+			DIARY_FILE_ID /* 파일ID */
+		  , DIARY_ID      /* 다이어리ID */
+		  , FILE_NAME     /* 파일명 */
+		  , FILE_PATH     /* 파일경로 */
+		  , IS_THUMB      /* 썸네일여부 */
+		  , REG_USER      /* 등록자 */
+		  , MODI_USER)    /* 수정시간 */
+		values (
+			DIARY_FILE_SEQ.NEXTVAL
+		  , #{diaryId}
+		  , #{fileName}
+		  , #{filePath}
+		  , #{isThumb}
 		  , 'sseon001'
 		  , 'sseon001'
 		)

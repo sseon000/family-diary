@@ -53,6 +53,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                             .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
                             .requestMatchers(AntPathRequestMatcher.antMatcher("/user")).permitAll()
+                            //.requestMatchers(AntPathRequestMatcher.antMatcher("/diary")).permitAll()
                             .anyRequest().authenticated()
             )
             .headers(headersConfigurer -> headersConfigurer
