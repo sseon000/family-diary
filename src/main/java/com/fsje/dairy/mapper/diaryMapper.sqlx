@@ -29,6 +29,9 @@
 
 	<!-- 다이어리 등록 -->
 	<insert id="dairyInsert" parameterType="DiaryDto">
+		<selectKey keyProperty="diaryId" resultType="Integer" order="BEFORE">
+			select DIARY_SEQ.NEXTVAL from DUAL
+		</selectKey>
 		insert into DIARY ( /* [dairyInsert][다이어리 등록][KSH][2024.06.25] */
 			DIARY_ID      /* ID */
 		  , DIARY_TITLE   /* 다이어리 제목 */
@@ -36,9 +39,30 @@
 		  , REG_USER      /* 등록자 */
 		  , MODI_USER )   /* 수정자 */
 		values (
-			DIARY_SEQ.NEXTVAL
+			#{diaryId}
 		  , #{diaryTitle}
 		  , #{diaryContent}
+		  , 'sseon001'
+		  , 'sseon001'
+		)
+	</insert>
+	
+	<!-- 다이어리 파일 등록 -->
+	<insert id="diaryFileInsert" parameterType="FileDto">
+		insert into DIARY_FILE (/* [insertDiaryFile][파일 등록][KSH][2024.07.10] */
+			DIARY_FILE_ID /* 파일ID */
+		  , DIARY_ID      /* 다이어리ID */
+		  , FILE_NAME     /* 파일명 */
+		  , FILE_PATH     /* 파일경로 */
+		  , IS_THUMB      /* 썸네일여부 */
+		  , REG_USER      /* 등록자 */
+		  , MODI_USER)    /* 수정시간 */
+		values (
+			DIARY_FILE_SEQ.NEXTVAL
+		  , #{diaryId}
+		  , #{fileName}
+		  , #{filePath}
+		  , #{isThumb}
 		  , 'sseon001'
 		  , 'sseon001'
 		)

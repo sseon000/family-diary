@@ -60,7 +60,7 @@ define([], function() {
 			formData.append("diaryDto", new Blob([JSON.stringify(diaryDto)], { type: 'application/json' }));
 			
 			$.ajax({
-				url: '/diary/uploadFileTest',
+				url: '/diary/reg',
 				type : "post",
 				data : formData,  
 				contentType: false,

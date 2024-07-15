@@ -1,14 +1,19 @@
 package com.fsje.dairy.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.fsje.dairy.common.model.Json;
+import com.fsje.dairy.controller.DiaryController;
 import com.fsje.dairy.dao.DiaryDao;
 import com.fsje.dairy.dto.DiaryDto;
+import com.fsje.dairy.dto.FileDto;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @file   : DiaryService
@@ -18,6 +23,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class DiaryService {
 	private final DiaryDao diaryDao;
 	
@@ -40,11 +46,37 @@ public class DiaryService {
 	 * @method : diarySave
 	 * @author : KSH
 	 * @since  : 2024.06.29
-	 * @param  : {obejct} DiaryDto
-	 * @return : {int} 
+	 * @param  : {object} DiaryDto diaryDto
+	 * @param  : {object} MultipartFile[] diaryFiles
+	 * @return : {obejct} Json<HashMap<String, Object>> 
 	 */
-	public int diarySave(DiaryDto diaryDto) {
-		return diaryDao.dairyInsert(diaryDto);
+	public Json<HashMap<String, Object>> diarySave(DiaryDto diaryDto, List<FileDto> fileList) {
+		HashMap<String, Object> res = new HashMap<String, Object>();
+		res.put("diaryDto", diaryDto);
+		res.put("fileList", fileList);
+		
+		// diary save return seq
+		diaryDao.dairyInsert(diaryDto);
+		int seq = diaryDto.getDiaryId();
+		//log.info("### seq, {}", seq);
+		
+		int i = 0;
+		// diary file save
+		for(FileDto file : fileList) {
+			
+			file.setDiaryId(seq);
+			
+			if(i == 0) {
+				file.setIsThumb("1");
+			} else {
+				file.setIsThumb("0");
+			}
+			
+        	diaryDao.diaryFileInsert(file);
+        	i++;
+        }
+		
+		return Json.createSuccessJson(res,"success");
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -130,17 +131,57 @@ public class DiaryController {
 	 * @method : diarySave
 	 * @author : KSH
 	 * @since  : 2024.06.25
-	 * @param  : {object} DiaryDto
-	 * @return : {object} Json<DiaryDto> 
+	 * @param  : {object} DiaryDto diaryDto
+	 * @param  : {object} MultipartFile[] diaryFiles
+	 * @return : {obejct} Json<HashMap<String, Object>> 
 	 */
-	@PutMapping(value = "/reg")
-	@ResponseBody
-	public Json<DiaryDto> diarySave(@RequestBody DiaryDto diaryDto) {
-		log.info("### DiaryController.diaryDto, {}", diaryDto.toString());
-		int rowCnt = diaryService.diarySave(diaryDto);
-		
-		return Json.createSuccessJson(diaryDto, "code123");
-	}
+    @PostMapping(value = "/reg")
+    @ResponseBody
+    public Json<HashMap<String, Object>> diarySave(@RequestPart("diaryFiles") MultipartFile[] diaryFiles
+    								   , @RequestPart("diaryDto") DiaryDto diaryDto) {
+    	
+    	log.info("### DiaryController.uploadFileTest.diaryDto, {}", diaryDto.toString());
+    	
+    	List<FileDto> fileList = new ArrayList<>();
+        for(MultipartFile uploadFile : diaryFiles) {
+            //파일 확장자 체크
+            if(uploadFile.getContentType().startsWith("image") == false) {
+                log.warn("this is not image type");
+                return null;
+            }
+            
+            String originalName = uploadFile.getOriginalFilename();
+            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+            String extension = StringUtils.getFilenameExtension(originalName);
+            
+            log.info("### uploadFileTest.fileName, {}", fileName);
+
+            //폴더 구분
+            String folderPath = makeFolder();
+            String uuid = UUID.randomUUID().toString();
+
+            //파일명 구분
+            String newFileName = uuid + "." + extension;
+            String saveName = uploadPath + File.separator + folderPath + File.separator + newFileName;
+            Path savePath = Paths.get(saveName);
+            
+            try {
+                uploadFile.transferTo(savePath);
+                FileDto fileDto = new FileDto();
+                fileDto.setFileName(newFileName);
+                fileDto.setFilePath("/uploadFile/" + folderPath + "/" + newFileName);
+                fileList.add(fileDto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            for(FileDto file : fileList) {
+            	log.info("### uploadFileTest.file, {}", file.toString());
+            }
+        }
+        
+        return diaryService.diarySave(diaryDto, fileList);
+    }
 	
 	/**
 	 * 다이어리 수정
@@ -160,115 +201,6 @@ public class DiaryController {
 		return Json.createSuccessJson(diaryDto, "code123");
 	}
 	
-	/**
-	 * 다이어리 화면
-	 * 
-	 * @method : pageDiaryList
-	 * @author : KSH
-	 * @since  : 2024.06.02
-	 * @param  : {} 
-	 * @return : {sting} page/diary/diaryMain
-	 */
-	@GetMapping(value = "/diaryFile")
-	public String pageDiaryFileList() {
-		log.info("### DiaryController.pageDiaryList, {}", "pageDiaryList");
-		return "page/diary/DiaryFile";
-	}
-    
-    @PostMapping(value = "/uploadFileTest")
-    @ResponseBody
-    public Json<List<FileDto>> uploadFileTest(@RequestPart("diaryFiles") MultipartFile[] diaryFiles
-    										, @RequestPart("diaryDto") DiaryDto diaryDto) {
-    	
-    	log.info("### DiaryController.uploadFileTest.diaryDto, {}", diaryDto.toString());
-    	List<FileDto> fileList = new ArrayList<>();
-    	
-        for(MultipartFile uploadFile : diaryFiles) {
-            //파일 확장자 체크
-        	//String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
-            if(uploadFile.getContentType().startsWith("image") == false) {
-                log.warn("this is not image type");
-                return null;
-            }
-            
-            String originalName = uploadFile.getOriginalFilename();
-            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
-            String extension = StringUtils.getFilenameExtension(originalName);
-            
-            log.info("### uploadFileTest.fileName, {}", fileName);
-
-            //폴더 구분
-            String folderPath = makeFolder();
-            String uuid = UUID.randomUUID().toString();
-
-            //파일명 구분
-            //String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
-            String newFileName = uuid + "." + extension;
-            String saveName = uploadPath + File.separator + folderPath + File.separator + newFileName;
-            Path savePath = Paths.get(saveName);
-            try {
-                uploadFile.transferTo(savePath);
-                FileDto fileDto = new FileDto();
-                fileDto.setFileName(newFileName);
-                fileDto.setFilePath(saveName);
-                fileDto.setIsThumb("1");
-                fileList.add(fileDto);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-            for(FileDto file : fileList) {
-            	log.info("### uploadFileTest.file, {}", file.toString());
-            }
-        }
-        
-        return Json.createSuccessJson(fileList,"uploadSuccess"); 
-    }
-    
-    @PutMapping(value = "/uploadFile")
-    @ResponseBody
-    public Json<List<FileDto>> uploadFile(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
-    	
-    	List<FileDto> fileList = new ArrayList<>();
-        for(MultipartFile uploadFile : uploadFiles) {
-
-            //파일 확장자 체크
-        	//String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
-            if(uploadFile.getContentType().startsWith("image") == false) {
-                log.warn("this is not image type");
-                return null;
-            }
-            
-
-            String originalName = uploadFile.getOriginalFilename();
-            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
-            String extension = StringUtils.getFilenameExtension(originalName);
-
-            log.info("fileName " +fileName);
-
-            //폴더 구분
-            String folderPath = makeFolder();
-            String uuid = UUID.randomUUID().toString();
-
-            //파일명 구분
-            //String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
-            String newFileName = uuid + "." + extension;
-            String saveName = uploadPath + File.separator + folderPath + File.separator + newFileName;
-            Path savePath = Paths.get(saveName);
-            try {
-                uploadFile.transferTo(savePath);
-                FileDto fileDto = new FileDto();
-                fileDto.setFileName(newFileName);
-                fileDto.setFilePath(folderPath);
-                fileList.add(fileDto);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        return Json.createSuccessJson(fileList,"uploadSuccess"); 
-    }
-
     /**
      * @todo util 패키지로 옮기기
      * 
