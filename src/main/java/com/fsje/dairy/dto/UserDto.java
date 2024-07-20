@@ -12,7 +12,8 @@ import lombok.Data;
 @Data
 public class UserDto {
 	private String userId;
-	private String userPassword;
-	private String userPasswordCheck;
+	private String password;
 	private String userName;
+	private String email;
+	private String familyId;
 }
