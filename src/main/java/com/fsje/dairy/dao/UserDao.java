@@ -32,4 +32,17 @@ public class UserDao {
 		return sqlSessionTemplate.insert("userDao.userInsert", userDto);
 	}
 	
+	/**
+	 * 회원 인증
+	 * 
+	 * @method : findByUserName
+	 * @author : KSH
+	 * @since  : 2024.7.23
+	 * @param  : {string} userName
+	 * @return : {User} user 
+	 */
+	public UserDto findByUserName(String userName) {
+		return sqlSessionTemplate.selectOne("userDao.findByUserName", userName);
+	}
+	
 }

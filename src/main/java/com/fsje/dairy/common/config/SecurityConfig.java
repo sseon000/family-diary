@@ -26,12 +26,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	/*
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	} 
-	*/
 	
 	//Cors 설정
 	@Bean
@@ -53,14 +51,19 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(authorizeRequest -> authorizeRequest
+                    .requestMatchers("/","/login","/loginP","/user","/user/signup").permitAll()
+                    .requestMatchers("/admin").hasRole("ADMIN")
+                    .anyRequest().authenticated()
+            )
             .formLogin(Customizer.withDefaults())
             .formLogin(login -> login
                     .loginPage("/login")
                     /*
                     .loginProcessingUrl("/loginP")
+                     */
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    */
                     .successHandler(new SimpleUrlAuthenticationSuccessHandler("/"))
                     .permitAll()
             )
@@ -79,11 +82,6 @@ public class SecurityConfig {
        	  					.logoutSuccessUrl("/logout-success")
        	  			);
             */
-            .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                            .requestMatchers("/","/user").permitAll()
-                            .requestMatchers("/admin").hasRole("ADMIN")
-                            .anyRequest().authenticated()
-            )
             .headers(headersConfigurer -> headersConfigurer
             	.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             );

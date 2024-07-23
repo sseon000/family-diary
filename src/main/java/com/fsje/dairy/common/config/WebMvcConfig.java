@@ -55,6 +55,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	private List<String> authExcludePatterns;
     
     
+    /*
     @Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(apiAuthInterceptor)
@@ -62,6 +63,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns(staticPatterns)
 				.excludePathPatterns(authExcludePatterns);
 	}
+	*/
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

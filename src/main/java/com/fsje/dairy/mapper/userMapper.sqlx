@@ -23,4 +23,16 @@
 		)
 	</insert>
 	
+	<!-- 회원 인증 -->
+	<select id="findByUserName" parameterType="String" resultType="UserDto">
+		select /* [findByUserName][회원 인증][KSH][2024.07.23] */
+			USER_NAME
+		  , PASSWORD
+		  , ROLE 
+		from 
+			DIARY_USER 
+		where 1=1
+			  and USER_ID = #{userName}
+	</select>
+	
 </mapper>

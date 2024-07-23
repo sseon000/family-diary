@@ -56,22 +56,27 @@ public class UserController {
 		//구글 이메일 인증 추가 필요 2024.07.20
 		
 		//리다이렉트 페이지
-		String redirectPage = "page/login/loginForm";
+		String redirectPage = "main";
 		try {
+			if("admin".equals(userDto.getUserId())) {
+				userDto.setRole("ADMIN");
+			} else {
+				userDto.setRole("USER");
+			}
 			
-			//2. 회원가입
+			//1. 회원가입
 			Json<UserDto> json = userService.userSave(userDto);
 			if(!"success".equals(json.getMessageCode())) {
 				throw new Exception("회원가입에 실패했습니다. 관리자에게 문의 부탁드립니다.");
 			}
 			
 		} catch(Exception e) {
-			redirectPage = "page/login/signupForm";
+			redirectPage = "page/user/signupForm";
 			model.addAttribute("msg", e.getMessage());
 			return redirectPage;
 		}
 		
-		//3. 로그인페이지 이동
+		//2. 로그인페이지 이동
 		return redirectPage;
 	}
 	

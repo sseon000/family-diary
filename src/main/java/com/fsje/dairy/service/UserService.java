@@ -1,5 +1,6 @@
 package com.fsje.dairy.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fsje.dairy.common.model.Json;
@@ -21,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 	private final UserDao userDao;
 	
+	private final PasswordEncoder passwordEncoder;
+	
 	/**
 	 * 회원 등록
 	 * 
@@ -31,6 +34,7 @@ public class UserService {
 	 * @return : {Json<UserDto>} json 
 	 */
 	public Json<UserDto> userSave(UserDto userDto) {
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		userDao.userInsert(userDto);
 		
 		return Json.createSuccessJson(userDto,"success");
