@@ -26,7 +26,7 @@
 				</div>
 				<div class="mb-3">
 					<label for="passwordCheck" class="form-label">비밀번호 확인</label>
-					<input type="password" class="form-control">
+					<input type="password" name="passwordCheck" class="form-control">
 				</div>
 				<div class="mb-3">
 					<label for="userName" class="form-label">이름</label>
@@ -36,13 +36,14 @@
 					<label for="email" class="form-label">이메일</label>
 					<input type="email" th:field="*{email}" class="form-control">
 				</div>
-				<button type="submit" class="btn btn-primary">회원가입</button>
+				<button type="submit" id="regBtn" name="regBtn" class="btn btn-primary" disabled>회원가입</button>
 			</form>
+			<button id="dupChkBtn" name="dupChkBtn" class="btn btn-primary">중복확인</button>
 		</div>
+		<script th:inline="javascript">
+			//let diaryDto = [[${diaryDto}]] || {};
+		</script>
+		<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/user/SignupForm"></script>
 	</div>
-<script th:inline="javascript">
-	//let diaryDto = [[${diaryDto}]] || {};
-</script>
-<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}" data-main="/js/page/user/singupForm"></script>
 </body>
 </html>

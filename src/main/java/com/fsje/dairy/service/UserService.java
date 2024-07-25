@@ -1,5 +1,7 @@
 package com.fsje.dairy.service;
 
+import java.util.Map;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,19 @@ public class UserService {
 		userDao.userInsert(userDto);
 		
 		return Json.createSuccessJson(userDto,"success");
+	}
+
+	/**
+	 * 회원 중복 체크
+	 * 
+	 * @method : isExistUserId
+	 * @author : KSH
+	 * @since  : 2024.07.25
+	 * @param  : {string} userId
+	 * @return : {string} "1", "0" 
+	 */
+	public String isExistUserId(String userId) {
+		return userDao.isExistUserId(userId);
 	}
 	
 }

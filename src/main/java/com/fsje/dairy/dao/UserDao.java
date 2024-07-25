@@ -35,14 +35,27 @@ public class UserDao {
 	/**
 	 * 회원 인증
 	 * 
-	 * @method : findByUserName
+	 * @method : findByUserId
 	 * @author : KSH
 	 * @since  : 2024.7.23
-	 * @param  : {string} userName
+	 * @param  : {string} userId
 	 * @return : {User} user 
 	 */
-	public UserDto findByUserName(String userName) {
-		return sqlSessionTemplate.selectOne("userDao.findByUserName", userName);
+	public UserDto findByUserId(String userId) {
+		return sqlSessionTemplate.selectOne("userDao.findByUserId", userId);
+	}
+	
+	/**
+	 * 회원 중복 체크
+	 * 
+	 * @method : isExistUserId
+	 * @author : KSH
+	 * @since  : 2024.07.20
+	 * @param  : {string} userId
+	 * @return : {string} "1", "0" 
+	 */
+	public String isExistUserId(String userId) {
+		return sqlSessionTemplate.selectOne("userDao.isExistUserId", userId);
 	}
 	
 }

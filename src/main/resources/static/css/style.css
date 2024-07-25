@@ -29,6 +29,10 @@ h6,
     font-weight: 400 !important;
 }
 
+img {
+	object-fit: cover;
+}
+
 .back-to-top {
     position: fixed;
     display: none;

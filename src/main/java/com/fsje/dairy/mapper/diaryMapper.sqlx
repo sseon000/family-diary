@@ -25,6 +25,8 @@
 		<if test="diaryContent != null and diaryContent != ''">
 			and A.DIARY_CONTENT like '%' || #{diaryContent} || '%'
 		</if>
+		order by
+			A.MODI_AT DESC
 	</select>
 
 	<!-- 다이어리 등록 -->

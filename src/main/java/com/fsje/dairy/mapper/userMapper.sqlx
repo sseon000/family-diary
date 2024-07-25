@@ -24,15 +24,25 @@
 	</insert>
 	
 	<!-- 회원 인증 -->
-	<select id="findByUserName" parameterType="String" resultType="UserDto">
-		select /* [findByUserName][회원 인증][KSH][2024.07.23] */
+	<select id="findByUserId" parameterType="String" resultType="UserDto">
+		select /* [findByUserId][회원 인증][KSH][2024.07.23] */
 			USER_NAME
 		  , PASSWORD
 		  , ROLE 
 		from 
 			DIARY_USER 
 		where 1=1
-			  and USER_ID = #{userName}
+			  and USER_ID = #{userId}
+	</select>
+	
+	<!-- 회원 중복 체크 -->
+	<select id="isExistUserId" parameterType="String" resultType="String">
+		select /* [isExistUserId][회원 중복 체크][KSH][2024.07.26] */
+			COUNT(*)
+		from 
+			DIARY_USER 
+		where 1=1
+			  and USER_ID = #{userId}
 	</select>
 	
 </mapper>

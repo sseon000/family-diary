@@ -1,15 +1,12 @@
 /*
 ######################################################################
-# Filename : signupForm.js
-# Description : 회원 등록
+# Filename : LoginForm.js
+# Description : 로그인
 # author : KSH
-# since : 2024.07.20
+# since : 2024.07.25
 ######################################################################
 */
-require([], function() {
+define([], function() {
     $(document).ready(function(){
-        //1. 이메일 인증
-        
-        //2. 중복체크
-	});
+    });
 });

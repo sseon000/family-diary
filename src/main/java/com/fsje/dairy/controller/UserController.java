@@ -1,9 +1,13 @@
 package com.fsje.dairy.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,7 +60,9 @@ public class UserController {
 		//구글 이메일 인증 추가 필요 2024.07.20
 		
 		//리다이렉트 페이지
-		String redirectPage = "main";
+		String redirectPage = "redirect:/";
+		model.addAttribute("msg", "회원가입이 완료됐습니다.");
+		
 		try {
 			if("admin".equals(userDto.getUserId())) {
 				userDto.setRole("ADMIN");
@@ -71,33 +77,31 @@ public class UserController {
 			}
 			
 		} catch(Exception e) {
-			redirectPage = "page/user/signupForm";
+			redirectPage = "redirect:page/user/signupForm";
 			model.addAttribute("msg", e.getMessage());
 			return redirectPage;
 		}
 		
-		//2. 로그인페이지 이동
+		//2. 페이지 이동
 		return redirectPage;
 	}
 	
 	/**
-	 * @method : user duplicate check
+	 * @method : 사용자ID 중복체크
 	 * @author : KSH
 	 * @since  : 2024.07.20
 	 * @param  : {UserDto} userDto 
 	 * @return : {string} msg
 	 */
-	@PostMapping("/userDupCheck")
+	@PostMapping("/isExistUserId")
 	@ResponseBody
-	public String userDupCheck(UserDto userDto) {
-		String msg = "가입 가능한 회원ID입니다.";
-		//1. 중복체크
-		//userService.userDupCheck(userDto.getUserId());
+	public Json<Map<String, String>> isExistUserId(@RequestBody UserDto userDto) {
+		log.info("userDto, {}", userDto.toString());
+		Map<String, String> output = new HashMap<>();
+		String isExists = userService.isExistUserId(userDto.getUserId());
 		
-		if(false) {
-			msg = "이미 존재하는 회원ID입니다.";
-		}
-		
-		return msg; 
+		output.put("checkedId", userDto.getUserId());
+		output.put("isExists", isExists);
+		return Json.createSuccessJson(output, "code123");
 	}
 }
