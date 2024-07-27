@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userDao">
+	
+	<!-- 회원 등록 -->
+	<insert id="userInsert" parameterType="UserDto">
+		insert into DIARY_USER (/* [insertUser][회원 등록][KSH][2024.07.20] */
+			USER_ID    /* 사용자ID */
+		  , PASSWORD   /* 패스워드 */
+		  , USER_NAME  /* 이름 */
+		  , EMAIL      /* 이메일 */
+		  , REG_USER   /* 등록자 */
+		  , MODI_USER) /* 수정자 */
+		values (
+			#{userId}
+		  , #{password}
+		  , #{userName}
+		  , #{email}
+		  , 'system'
+		  , 'system'
+		)
+	</insert>
+	
+	<!-- 회원 인증 -->
+	<select id="findByUserId" parameterType="String" resultType="UserDto">
+		select /* [findByUserId][회원 인증][KSH][2024.07.23] */
+			USER_NAME
+		  , PASSWORD
+		  , ROLE 
+		from 
+			DIARY_USER 
+		where 1=1
+			  and USER_ID = #{userId}
+	</select>
+	
+	<!-- 회원 중복 체크 -->
+	<select id="isExistUserId" parameterType="String" resultType="String">
+		select /* [isExistUserId][회원 중복 체크][KSH][2024.07.26] */
+			COUNT(*)
+		from 
+			DIARY_USER 
+		where 1=1
+			  and USER_ID = #{userId}
+	</select>
+	
+</mapper>

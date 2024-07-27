@@ -1,7 +1,9 @@
 package com.fsje.dairy.common.config;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -22,6 +26,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	} 
 	
 	//Cors 설정
 	@Bean
@@ -37,32 +45,48 @@ public class SecurityConfig {
 	    source.registerCorsConfiguration("/**", configuration);
 	    return source;
 	}
-
-	//
+	
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(authorizeRequest -> authorizeRequest
+                    .requestMatchers("/","/login","/loginP","/user","/user/signup","/user/authEmail").permitAll()
+                    .requestMatchers("/admin").hasRole("ADMIN")
+                    .anyRequest().authenticated()
+            )
             .formLogin(Customizer.withDefaults())
             .formLogin(login -> login
                     .loginPage("/login")
+                    //.loginProcessingUrl("/loginP")
+                    .usernameParameter("userId")
+                    .passwordParameter("password")
                     .successHandler(new SimpleUrlAuthenticationSuccessHandler("/"))
                     .permitAll()
             )
-            .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("/user")).permitAll()
-                            //.requestMatchers(AntPathRequestMatcher.antMatcher("/diary")).permitAll()
-                            .anyRequest().authenticated()
-            )
+            /*
+            .sessionManagement((sessionManagement) -> sessionManagement
+       	  					.sessionConcurrency((sessionConcurrency) -> sessionConcurrency
+       	  							.maximumSessions(1)
+       	  							.expiredUrl("/login?expired")
+       	  					)
+       	  	);
+       	  	*/
+            /*
+            .logout((logout) -> logout.deleteCookies("remove")
+       	  					.invalidateHttpSession(false)
+       	  					.logoutUrl("/custom-logout")
+       	  					.logoutSuccessUrl("/logout-success")
+       	  			);
+            */
             .headers(headersConfigurer -> headersConfigurer
             	.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             );
 
         return http.build();
     }
-
+    
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // 정적 리소스 spring security 대상에서 제외

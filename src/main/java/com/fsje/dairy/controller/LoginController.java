@@ -24,12 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("login")
+@RequestMapping("/login")
 public class LoginController {
 	//private final DiaryService diaryService;
 	
 	/**
-	 * @method   : pageLogin
+	 * @method : pageLogin
 	 * @author : KSH
 	 * @since  : 2024.06.09
 	 * @param  : {} 
