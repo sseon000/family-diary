@@ -29,7 +29,7 @@ public class LoginController {
 	//private final DiaryService diaryService;
 	
 	/**
-	 * @method   : pageLogin
+	 * @method : pageLogin
 	 * @author : KSH
 	 * @since  : 2024.06.09
 	 * @param  : {} 

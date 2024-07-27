@@ -11,34 +11,35 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layout/layout}">
+	  
 <body>
 	<div layout:fragment="content">
-		<div class="container">
+		<div class="centerWrapper">
 			<h1>회원가입</h1>
-			<form th:action="@{/user/signup}" th:object="${userDto}" method="post">
+			<div class="w-25 p-3">
 				<div class="mb-3">
 					<label for="userId" class="form-label">사용자ID</label>
-					<input type="text" th:field="*{userId}" class="form-control">
+					<input type="text" id="userId" name="userId" class="form-control">
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">비밀번호</label>
-					<input type="password" th:field="*{password}" class="form-control">
-				</div>
-				<div class="mb-3">
-					<label for="passwordCheck" class="form-label">비밀번호 확인</label>
-					<input type="password" name="passwordCheck" class="form-control">
+					<input type="password" id="password" name="password" class="form-control">
 				</div>
 				<div class="mb-3">
 					<label for="userName" class="form-label">이름</label>
-					<input type="text" th:field="*{userName}" class="form-control">
+					<input type="text" id="userName" name="userName" class="form-control">
 				</div>
 				<div class="mb-3">
 					<label for="email" class="form-label">이메일</label>
-					<input type="email" th:field="*{email}" class="form-control">
+					<input type="email" id="email" name="email" class="form-control">
 				</div>
-				<button type="submit" id="regBtn" name="regBtn" class="btn btn-primary" disabled>회원가입</button>
-			</form>
-			<button id="dupChkBtn" name="dupChkBtn" class="btn btn-primary">중복확인</button>
+				<button id="authBtn" name="authBtn" class="btn btn-primary">이메일 인증</button>
+				<div class="mb-3" invisible>
+					<label for="authCode" class="form-label">인증코드</label>
+					<input type="text" id="authCode" name="authCode" class="form-control">
+				</div>
+				<button id="regBtn" name="regBtn" class="btn btn-primary" disabled>회원가입</button>
+			</div>
 		</div>
 		<script th:inline="javascript">
 			//let diaryDto = [[${diaryDto}]] || {};

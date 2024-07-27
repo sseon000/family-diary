@@ -555,3 +555,11 @@ img {
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+/* 가운데 정렬 Wrapper */
+.centerWrapper {
+		display: flex;
+	    flex-direction: column;
+	    flex-wrap: wrap;
+	    align-content: center;
+	}

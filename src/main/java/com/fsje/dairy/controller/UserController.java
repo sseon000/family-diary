@@ -55,53 +55,54 @@ public class UserController {
 	 * @return : {string} page/user/signupForm
 	 */
 	@PostMapping("/signup")
-	public String signup(UserDto userDto, Model model) {
+	@ResponseBody
+	public Json<Map<String, String>> signup(@RequestBody UserDto userDto) {
 		log.info("userDto, {}", userDto.toString());
-		//구글 이메일 인증 추가 필요 2024.07.20
-		
-		//리다이렉트 페이지
-		String redirectPage = "redirect:/";
-		model.addAttribute("msg", "회원가입이 완료됐습니다.");
+		Map<String, String> output = new HashMap<>();
 		
 		try {
+			//1. 중복회원 체크
+			String isExists = userService.isExistUserId(userDto.getUserId());
+			if("1".equals(isExists)) {
+				throw new Exception("중복된 ID입니다.");
+			}
+			
+			//2. 회원가입
+			Json<UserDto> json = userService.userSave(userDto);
+			if(!"success".equals(json.getMessageCode())) {
+				throw new Exception("회원가입에 실패했습니다. 관리자에게 문의 부탁드립니다.");
+			}
+			
+			//3. 회원권한 설정
 			if("admin".equals(userDto.getUserId())) {
 				userDto.setRole("ADMIN");
 			} else {
 				userDto.setRole("USER");
 			}
 			
-			//1. 회원가입
-			Json<UserDto> json = userService.userSave(userDto);
-			if(!"success".equals(json.getMessageCode())) {
-				throw new Exception("회원가입에 실패했습니다. 관리자에게 문의 부탁드립니다.");
-			}
-			
 		} catch(Exception e) {
-			redirectPage = "redirect:page/user/signupForm";
-			model.addAttribute("msg", e.getMessage());
-			return redirectPage;
+			output.put("msg", e.getMessage());
+			return Json.createSuccessJson(output, "error");
 		}
 		
-		//2. 페이지 이동
-		return redirectPage;
+		output.put("msg", "회원가입 성공");
+		return Json.createSuccessJson(output, "success");
 	}
 	
 	/**
-	 * @method : 사용자ID 중복체크
+	 * @method : 구글 이메일 인증
 	 * @author : KSH
-	 * @since  : 2024.07.20
+	 * @since  : 2024.07.27
 	 * @param  : {UserDto} userDto 
 	 * @return : {string} msg
 	 */
-	@PostMapping("/isExistUserId")
+	@PostMapping("/authEmail")
 	@ResponseBody
-	public Json<Map<String, String>> isExistUserId(@RequestBody UserDto userDto) {
+	public Json<Map<String, String>> authEmail(@RequestBody UserDto userDto) {
 		log.info("userDto, {}", userDto.toString());
 		Map<String, String> output = new HashMap<>();
-		String isExists = userService.isExistUserId(userDto.getUserId());
+		//구글 이메일 인증 추가 필요 2024.07.27
 		
-		output.put("checkedId", userDto.getUserId());
-		output.put("isExists", isExists);
-		return Json.createSuccessJson(output, "code123");
+		return Json.createSuccessJson(output, "success");
 	}
 }

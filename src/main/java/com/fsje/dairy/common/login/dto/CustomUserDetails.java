@@ -7,15 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fsje.dairy.dao.UserDao;
 import com.fsje.dairy.dto.UserDto;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-	@Autowired
-	private UserDto userDto;	
-	
-	public CustomUserDetails(UserDto userDto) {
-		this.userDto = userDto;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final UserDto userDto;	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
