@@ -55,7 +55,7 @@ public class DiaryController {
 	 * 1. 객체의 불변성 확보 : 생성자는 호출 시점에 1회만 호출됨
 	 * 2. 테스트 코드의 작성 : 스프링의 의존성 주입을 맡기지 않고 순수 자바 코드를 이용할 수 있음
 	 * 3. lombok + @Autowired 생략 : lombok의 RequiredArgsConstructor를 이용해 생성자 방식 의존성 주입 + 생성자가 1개만 있을경우 @Autowired 생략
-	 * 4. 순환 참조 에러 방지 :
+	 * 4. 순환 참조 에러 방지 : 객체를 생성하는 단계에 순환 참조가 체크 가능
 	 */
 	private final DiaryService diaryService;
 	
