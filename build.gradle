@@ -48,8 +48,11 @@ dependencies {
 	implementation 'org.webjars:jquery:3.5.1'
 	//require
 	runtimeOnly 'org.webjars:requirejs:2.3.6'
-	// javamail
+	//javamail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    //configuration properties
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    
 }
 
 tasks.named('test') {
