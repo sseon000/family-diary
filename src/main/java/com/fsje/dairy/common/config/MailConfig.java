@@ -2,6 +2,7 @@ package com.fsje.dairy.common.config;
 
 import java.util.Properties;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,23 +10,27 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.fsje.dairy.common.properties.MailProperties;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@RequiredArgsConstructor
+@EnableConfigurationProperties(MailProperties.class)
 @Slf4j
 public class MailConfig {
-    Properties pt = new Properties();
     private final MailProperties mailProperties;
+    Properties pt = new Properties();
+    
+    public MailConfig(MailProperties mailProperties) {
+    	this.mailProperties = mailProperties;
+    }
 
     @Bean
     public JavaMailSender javaMailService() {
+    	/*
     	log.info("host : " + mailProperties.getHost());
     	log.info("userName : " + mailProperties.getUserName());
     	log.info("pw : " + mailProperties.getPassword());
     	log.info("port : " + mailProperties.getPort());
+    	*/
     	
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(mailProperties.getHost());
@@ -41,7 +46,7 @@ public class MailConfig {
         //pt.put("mail.smtp.socketFactory.class", mailProperties.getSocketFactoryClass());
 
         javaMailSender.setJavaMailProperties(pt);
-        javaMailSender.setDefaultEncoding("UTF-8");
+        javaMailSender.setDefaultEncoding(mailProperties.getDefaultEncoding());
 
         return javaMailSender;
     }
