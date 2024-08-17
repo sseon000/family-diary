@@ -14,6 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableConfigurationProperties(MailProperties.class)
+/***
+ * @Configuration + @Bean을 통해 수동으로 빈등록
+ * @EnableConfigurationProperties(해당 클래스명.class)을 통해 properties 클래스 필드 사용  
+ */
 @Slf4j
 public class MailConfig {
     private final MailProperties mailProperties;

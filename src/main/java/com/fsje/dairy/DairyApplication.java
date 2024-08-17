@@ -9,7 +9,7 @@ import com.fsje.dairy.common.config.TomcatWebCustomConfig;
 import com.fsje.dairy.common.config.WebMvcConfig;
 
 @SpringBootApplication
-@Import(value = {DataBaseConfig.class, TomcatWebCustomConfig.class, WebMvcConfig.class})
+//@Import(value = {DataBaseConfig.class, TomcatWebCustomConfig.class, WebMvcConfig.class})
 public class DairyApplication {
 
 	public static void main(String[] args) {
