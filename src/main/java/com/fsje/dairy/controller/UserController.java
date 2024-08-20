@@ -105,6 +105,9 @@ public class UserController {
 		log.info("userDto, {}", userDto.toString());
 		Map<String, String> output = new HashMap<>();
 		//구글 이메일 인증 추가 필요 2024.07.27
+		String subject = "[😀] 이메일 인증 메일입니다.";
+		String body = "안녕하세요?\r\n이메일 인증코드가 발급되었습니다. 아래 인증코드를 홈페이지 인증코드란에 입력해주세요.\r\n인증코드 : " + "1001";
+		mailService.sendEmail(userDto.getEmail(), subject, body);
 		
 		return Json.createSuccessJson(output, "success");
 	}
